@@ -2,7 +2,8 @@ import React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import { orange } from '@mui/material/colors';
+import LoginPreview from '../components/LoginPreview';
+import LoginForm from '../components/LoginForm';
 
 const boxContainer = {
   display: 'flex',
@@ -13,8 +14,8 @@ const boxContainer = {
 
 const boxWrapper = {
   display: 'flex',
-  width: '50vw',
-  height: '50vh',
+  width: '60vw',
+  height: '65vh',
   boxShadow: `rgb(255 58 1 / 40%) 5px 5px, 
     rgb(255 58 1 / 30%) 10px 10px, 
     rgb(255 58 1 / 20%) 15px 15px, 
@@ -25,26 +26,14 @@ const boxWrapper = {
     rgb(255 221 199 / 5%) 0px 0px 0px 1px inset`,
 };
 
-const boxLeft = {
-  flex: 1,
-  boxShadow: 'rgba(0, 0, 0, 0.1) 1px 1px 2px 0px',
-  border: '1px solid #ffede1',
-  background: '#fff',
-};
-
-const boxRight = {
-  flex: 1,
-  backgroundColor: '#ffede1',
-};
-
 const LoginPage = () => {
   return (
     <React.Fragment>
       <CssBaseline />
       <Container sx={boxContainer}>
         <Box sx={boxWrapper}>
-          <Box sx={boxLeft}></Box>
-          <Box sx={boxRight}></Box>
+          <LoginForm />
+          <LoginPreview />
         </Box>
       </Container>
     </React.Fragment>
