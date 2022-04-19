@@ -11,7 +11,6 @@ export const theme = createTheme({
     secondary: {
       light: '#0066ff',
       main: '#212121',
-      // dark: will be calculated from palette.secondary.main,
       contrastText: '#fff',
     },
     // Used by `getContrastText()` to maximize the contrast between
