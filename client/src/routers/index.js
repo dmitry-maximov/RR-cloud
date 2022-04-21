@@ -1,3 +1,4 @@
+import Space from '../pages/SpacePage';
 import HelpPage from '../pages/HelpPage';
 import LoginPage from '../pages/LoginPage';
 import NotFoundPage from '../pages/NotFoundPage';
@@ -7,6 +8,7 @@ import {
   LOGIN_PAGE,
   NOT_FOUND_PAGE,
   START_PAGE_ROUTE,
+  CLOUD_SPAСE_PAGE,
 } from '../utils/const';
 
 export const publicRoutes = [
@@ -23,7 +25,18 @@ export const publicRoutes = [
     element: <LoginPage />,
   },
   {
+    path: CLOUD_SPAСE_PAGE,
+    element: <Space />,
+  },
+  {
     path: NOT_FOUND_PAGE,
     element: <NotFoundPage />,
+  },
+];
+
+export const privateRoutes = [
+  {
+    path: CLOUD_SPAСE_PAGE,
+    element: <Space />,
   },
 ];

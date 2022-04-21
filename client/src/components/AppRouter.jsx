@@ -1,8 +1,9 @@
 import React from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
-import { publicRoutes } from '../routers';
+import { publicRoutes, privateRoutes } from '../routers';
 import { NOT_FOUND_PAGE } from '../utils/const';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import Layout from './Layout';
 
 const AppRouter = () => {
   const location = useLocation();
@@ -10,10 +11,18 @@ const AppRouter = () => {
     <TransitionGroup component={null}>
       <CSSTransition key={location.pathname} classNames="fade" timeout={3000}>
         <Routes location={location}>
-          {publicRoutes.map(({ path, element }) => (
+          {/* {publicRoutes.map(({ path, element }) => (
             <Route key={path} path={path} element={element} exact />
-          ))}
+          ))} */}
 
+          {privateRoutes.map(({ path, element }) => (
+            <Route
+              key={path}
+              path={path}
+              element={<Layout>{element}</Layout>}
+              exact
+            />
+          ))}
           <Route path="*" element={<Navigate to={NOT_FOUND_PAGE} />} />
         </Routes>
       </CSSTransition>
