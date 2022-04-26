@@ -7,6 +7,7 @@ const StyledFlex = styled.div`
   align-items: ${(props) => props.align || 'stretch'};
   justify-content: ${(props) => props.justify || 'stretch'};
   margin: ${({ margin }) => margin || '0'};
+  padding: ${({ padding }) => padding || '0'};
 `;
 
 const Flex = (props) => {

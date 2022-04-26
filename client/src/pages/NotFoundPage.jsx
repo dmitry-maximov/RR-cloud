@@ -26,7 +26,7 @@ const NotFoundPage = () => {
               fontWeight: 600,
               textTransform: 'uppercase',
               lineHeight: 0.7,
-              color: '#ffede1',
+              color: '#FFF2E5',
             }}
           >
             404

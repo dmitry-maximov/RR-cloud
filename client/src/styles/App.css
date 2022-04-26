@@ -19,7 +19,12 @@
 }
 
 #root {
-  background: #fdfdfd;
+  /* background: #fdfdfd;
+  background: url('../img/image.jpg');
+  height: 100vh;
+  background-size: cover; */
+  /* background-position: center center; */
+  /* background-attachment: fixed; */
 }
 
 /* .fade-enter {

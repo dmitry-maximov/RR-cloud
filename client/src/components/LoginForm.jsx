@@ -9,7 +9,7 @@ import Flex from './UI/Flex';
 const LoginForm = () => {
   const boxwrapper = {
     flex: 1,
-    boxShadow: 'rgba(0, 0, 0, 0.1) 1px 1px 2px 0px',
+    boxShadow: 'rgba(245, 242, 229, 0.1) 1px 1px 2px 0px',
     border: '1px solid #ffede1',
     background: '#fff',
   };
@@ -32,6 +32,7 @@ const LoginForm = () => {
             variant="h4"
             textAlign={'center'}
             sx={{
+              color: 'secondary.main',
               fontWeight: 500,
             }}
           >

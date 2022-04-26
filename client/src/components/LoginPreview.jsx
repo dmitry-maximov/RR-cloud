@@ -12,7 +12,7 @@ const boxWrapper = {
   flex: 1,
   overflow: 'hidden',
   px: 3,
-  backgroundColor: '#ffede1',
+  backgroundColor: '#FFF2E5',
 };
 
 const Item = styled('div')(({ theme }) => ({

@@ -1,4 +1,5 @@
 import { createTheme } from '@mui/material/styles';
+import backgroundImg from '../img/image.jpg';
 
 export const theme = createTheme({
   palette: {
@@ -10,7 +11,7 @@ export const theme = createTheme({
     },
     secondary: {
       light: '#0066ff',
-      main: '#212121',
+      main: '#0b3243',
       contrastText: '#fff',
     },
     // Used by `getContrastText()` to maximize the contrast between
@@ -20,5 +21,11 @@ export const theme = createTheme({
     // two indexes within its tonal palette.
     // E.g., shift from Red 500 to Red 300 or Red 700.
     tonalOffset: 0.2,
+
+    paperContainer: {
+      background: 'url(' + backgroundImg + ')',
+      backgroundSize: 'cover',
+      // backgroundPosition: 'center center',
+    },
   },
 });
