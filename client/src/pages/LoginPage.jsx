@@ -3,7 +3,11 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import LoginPreview from '../components/LoginPreview';
+import AuthForm from '../components/AuthForm';
+import { useLocation } from 'react-router-dom';
+import { LOGIN_PAGE } from '../utils/const';
 import LoginForm from '../components/LoginForm';
+import RegistrationForm from '../components/RegistrationForm';
 
 const boxContainer = {
   display: 'flex',
@@ -27,13 +31,17 @@ const boxWrapper = {
 };
 
 const LoginPage = () => {
+  const location = useLocation();
+  const isLogin = location.pathname === LOGIN_PAGE;
   return (
     <React.Fragment>
       <CssBaseline />
       <Container sx={boxContainer}>
         <Box sx={boxWrapper}>
-          <LoginForm />
-          <LoginPreview />
+          <AuthForm caption={isLogin ? 'Авторизация' : 'Регистрация'}>
+            {isLogin ? <LoginForm /> : <RegistrationForm />}
+          </AuthForm>
+          <LoginPreview isLogin={isLogin} />
         </Box>
       </Container>
     </React.Fragment>

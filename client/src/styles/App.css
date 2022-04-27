@@ -3,6 +3,10 @@
   margin: 0px;
 }
 
+a {
+  text-decoration: none;
+}
+
 .fade-enter {
   opacity: 0;
 }

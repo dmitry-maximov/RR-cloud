@@ -16,6 +16,8 @@ import FilterDramaIcon from '@mui/icons-material/FilterDrama';
 import StarHalfIcon from '@mui/icons-material/StarHalf';
 import SettingsIcon from '@mui/icons-material/Settings';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { Link } from 'react-router-dom';
+import { START_PAGE } from '../utils/const';
 
 const SideBar = () => {
   const Item = styled('div')(({ theme }) => ({
@@ -49,21 +51,23 @@ const SideBar = () => {
         alignItems="left"
         spacing={5}
       >
-        <Item>
-          <Stack direction="row" justifyContent="center">
-            <WbCloudyIcon sx={{ fontSize: 60, color: orange[800] }} />
-            <Typography
-              variant="h5"
-              sx={{
-                fontWeight: 600,
-                textTransform: 'uppercase',
-                padding: '1rem 0.75rem',
-              }}
-            >
-              RR-cloud
-            </Typography>
-          </Stack>
-        </Item>
+        <Link to={START_PAGE}>
+          <Item>
+            <Stack direction="row" justifyContent="center">
+              <WbCloudyIcon sx={{ fontSize: 60, color: orange[800] }} />
+              <Typography
+                variant="h5"
+                sx={{
+                  fontWeight: 600,
+                  textTransform: 'uppercase',
+                  padding: '1rem 0.75rem',
+                }}
+              >
+                RR-cloud
+              </Typography>
+            </Stack>
+          </Item>
+        </Link>
 
         <Button
           variant="contained"

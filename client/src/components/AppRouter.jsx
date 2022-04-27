@@ -23,15 +23,10 @@ const AppRouter = () => {
           {publicRoutes.map(({ path, element }) => (
             <Route key={path} path={path} element={element} exact />
           ))}
-
           {isAuth &&
             privateRoutes.map(({ path, element }) => (
               <Route key={path} path={path} element={<Layout />}>
-                <Route
-                  key={path}
-                  path={path}
-                  element={<Layout>{element}</Layout>}
-                />
+                <Route key={path} path={path} element={element} />
               </Route>
             ))}
           <Route path="*" element={<Navigate to={NOT_FOUND_PAGE} />} />

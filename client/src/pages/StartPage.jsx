@@ -3,6 +3,8 @@ import { styled } from '@mui/material/styles';
 import { Container, Typography, Stack, Button } from '@mui/material';
 import WbCloudyIcon from '@mui/icons-material/WbCloudy';
 import PersonIcon from '@mui/icons-material/Person';
+import { Link } from 'react-router-dom';
+import { HELP_PAGE, LOGIN_PAGE, REGISTRATION_PAGE } from '../utils/const';
 
 const StyledContainer = styled('div')(({ theme }) => ({
   ...theme.palette.paperContainer,
@@ -54,21 +56,27 @@ const StartPage = () => {
           </Stack>
 
           <StyledHeaderMenu>
-            <Button size="large" variant="text" color={'secondary'}>
-              О проекте
-            </Button>
-            <Button size="large" variant="text" color={'secondary'}>
-              Помощь и обратная связь
-            </Button>
-            <Button
-              variant="contained"
-              size="large"
-              color={'secondary'}
-              sx={{ margin: '0 2rem 0rem 4rem' }}
-              startIcon={<PersonIcon />}
-            >
-              Войти
-            </Button>
+            <Link to={HELP_PAGE}>
+              <Button size="large" variant="text" color={'secondary'}>
+                О проекте
+              </Button>
+            </Link>
+            <Link to={LOGIN_PAGE}>
+              <Button size="large" variant="text" color={'secondary'}>
+                Помощь и обратная связь
+              </Button>
+            </Link>
+            <Link to={LOGIN_PAGE}>
+              <Button
+                variant="contained"
+                size="large"
+                color={'secondary'}
+                sx={{ margin: '0 2rem 0rem 4rem' }}
+                startIcon={<PersonIcon />}
+              >
+                Войти
+              </Button>
+            </Link>
           </StyledHeaderMenu>
         </StyledHeader>
 
@@ -77,7 +85,7 @@ const StartPage = () => {
             <Typography
               variant="h2"
               sx={{
-                fontWeight: 500,
+                fontWeight: 400,
                 lineHeight: 0.95,
                 color: 'secondary.main',
               }}
@@ -95,7 +103,7 @@ const StartPage = () => {
             <Typography
               variant="h2"
               sx={{
-                fontWeight: 500,
+                fontWeight: 400,
                 lineHeight: 0.95,
                 color: 'secondary.main',
               }}
@@ -112,18 +120,16 @@ const StartPage = () => {
             </Typography>
             <div style={{ padding: '3rem 0rem' }}>
               <Typography
-                variant="h4"
+                variant="h5"
                 sx={{
                   color: 'secondary.main',
-                  fontWeight: 500,
                 }}
               >
                 Удобный способ получить доступ
               </Typography>
               <Typography
-                variant="h4"
+                variant="h5"
                 sx={{
-                  fontWeight: 500,
                   color: 'secondary.main',
                   lineHeight: 0.9,
                 }}
@@ -140,15 +146,16 @@ const StartPage = () => {
                 </Typography>
               </Typography>
             </div>
-
-            <Button
-              variant="contained"
-              size="large"
-              sx={{ padding: '1rem 3rem' }}
-              startIcon={<WbCloudyIcon />}
-            >
-              Завести диск
-            </Button>
+            <Link to={REGISTRATION_PAGE}>
+              <Button
+                variant="contained"
+                size="large"
+                sx={{ padding: '1rem 3rem' }}
+                startIcon={<WbCloudyIcon />}
+              >
+                Завести диск
+              </Button>
+            </Link>
           </Container>
         </StyledMain>
 

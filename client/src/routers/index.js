@@ -4,20 +4,21 @@ import LoginPage from '../pages/LoginPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import StartPage from '../pages/StartPage';
 import {
-  HELP_PAGE_ROUTE,
+  HELP_PAGE,
   LOGIN_PAGE,
   NOT_FOUND_PAGE,
-  START_PAGE_ROUTE,
+  START_PAGE,
   CLOUD_SPAСE_PAGE,
+  REGISTRATION_PAGE,
 } from '../utils/const';
 
 export const publicRoutes = [
   {
-    path: START_PAGE_ROUTE,
+    path: START_PAGE,
     element: <StartPage />,
   },
   {
-    path: HELP_PAGE_ROUTE,
+    path: HELP_PAGE,
     element: <HelpPage />,
   },
   {
@@ -25,8 +26,8 @@ export const publicRoutes = [
     element: <LoginPage />,
   },
   {
-    path: CLOUD_SPAСE_PAGE,
-    element: <Space />,
+    path: REGISTRATION_PAGE,
+    element: <LoginPage />,
   },
   {
     path: NOT_FOUND_PAGE,
