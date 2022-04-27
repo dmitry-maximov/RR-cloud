@@ -4,8 +4,8 @@ import { publicRoutes, privateRoutes } from '../routers';
 import { useDispatch, useSelector } from 'react-redux';
 import { NOT_FOUND_PAGE } from '../utils/const';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
-import Layout from './Layout';
 import { auth } from '../actions/user';
+import PrivateLayout from './layout/PrivateLayout/PrivateLayout';
 
 const AppRouter = () => {
   const isAuth = useSelector((state) => state.user.isAuth);
@@ -25,9 +25,11 @@ const AppRouter = () => {
           ))}
           {isAuth &&
             privateRoutes.map(({ path, element }) => (
-              <Route key={path} path={path} element={<Layout />}>
-                <Route key={path} path={path} element={element} />
-              </Route>
+              <Route
+                key={path}
+                path={path}
+                element={<PrivateLayout> element</PrivateLayout>}
+              />
             ))}
           <Route path="*" element={<Navigate to={NOT_FOUND_PAGE} />} />
         </Routes>

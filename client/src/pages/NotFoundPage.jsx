@@ -1,6 +1,5 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import CssBaseline from '@mui/material/CssBaseline';
 import { Button, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
@@ -15,7 +14,6 @@ const NotFoundPage = () => {
   const navigate = useNavigate();
   return (
     <StyledBox>
-      <CssBaseline />
       <Stack
         direction="column"
         justifyContent="center"

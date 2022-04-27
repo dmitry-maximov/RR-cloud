@@ -1,5 +1,4 @@
 import React from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import LoginPreview from '../components/LoginPreview';
@@ -35,7 +34,6 @@ const LoginPage = () => {
   const isLogin = location.pathname === LOGIN_PAGE;
   return (
     <React.Fragment>
-      <CssBaseline />
       <Container sx={boxContainer}>
         <Box sx={boxWrapper}>
           <AuthForm caption={isLogin ? 'Авторизация' : 'Регистрация'}>

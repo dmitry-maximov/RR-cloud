@@ -17,7 +17,7 @@ import StarHalfIcon from '@mui/icons-material/StarHalf';
 import SettingsIcon from '@mui/icons-material/Settings';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Link } from 'react-router-dom';
-import { START_PAGE } from '../utils/const';
+import { START_PAGE } from '../../../utils/const';
 
 const SideBar = () => {
   const Item = styled('div')(({ theme }) => ({

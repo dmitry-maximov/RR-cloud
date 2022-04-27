@@ -1,8 +1,8 @@
 import React from 'react';
 import PublicLayout from '../components/layout/PublicLayout/PublicLayout';
 
-const HelpPage = () => {
-  return <PublicLayout>456</PublicLayout>;
+const AboutPage = () => {
+  return <PublicLayout>123</PublicLayout>;
 };
 
-export default HelpPage;
+export default AboutPage;

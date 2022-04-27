@@ -4,7 +4,7 @@ import NavBar from './NavBar';
 import SideBar from './SideBar';
 import styled from 'styled-components';
 
-const Layout = (props) => {
+const PrivateLayout = (props) => {
   const Item = styled('div')(({ theme }) => ({
     background: '#f7f8fa',
     minHeight: '100vh',
@@ -13,10 +13,10 @@ const Layout = (props) => {
 
   return (
     <Grid container xs={{ padding: '0', margin: '0' }}>
-      <Grid item xs={4} sm={3} md={2}>
+      <Grid item xs={5} sm={4} md={3} xl={2}>
         <SideBar />
       </Grid>
-      <Grid item xs={8} sm={9} md={10}>
+      <Grid item xs={7} sm={8} md={9} xl={10}>
         <Item>
           <NavBar />
           <main>{props.children}</main>
@@ -26,4 +26,4 @@ const Layout = (props) => {
   );
 };
 
-export default Layout;
+export default PrivateLayout;

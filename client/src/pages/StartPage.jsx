@@ -4,7 +4,12 @@ import { Container, Typography, Stack, Button } from '@mui/material';
 import WbCloudyIcon from '@mui/icons-material/WbCloudy';
 import PersonIcon from '@mui/icons-material/Person';
 import { Link } from 'react-router-dom';
-import { HELP_PAGE, LOGIN_PAGE, REGISTRATION_PAGE } from '../utils/const';
+import {
+  ABOUT_PAGE,
+  HELP_PAGE,
+  LOGIN_PAGE,
+  REGISTRATION_PAGE,
+} from '../utils/const';
 
 const StyledContainer = styled('div')(({ theme }) => ({
   ...theme.palette.paperContainer,
@@ -56,12 +61,12 @@ const StartPage = () => {
           </Stack>
 
           <StyledHeaderMenu>
-            <Link to={HELP_PAGE}>
+            <Link to={ABOUT_PAGE}>
               <Button size="large" variant="text" color={'secondary'}>
                 О проекте
               </Button>
             </Link>
-            <Link to={LOGIN_PAGE}>
+            <Link to={HELP_PAGE}>
               <Button size="large" variant="text" color={'secondary'}>
                 Помощь и обратная связь
               </Button>
