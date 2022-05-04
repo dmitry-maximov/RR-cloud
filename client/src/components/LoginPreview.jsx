@@ -18,7 +18,6 @@ const boxWrapper = {
 };
 
 const Item = styled('div')(({ theme }) => ({
-  ...theme.typography.body2,
   color: theme.palette.text.primary,
 }));
 

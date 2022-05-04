@@ -6,7 +6,7 @@ import Footer from './Footer';
 
 const PublicLayout = (props) => {
   return (
-    <Stack direction="column" sx={{ height: '100vh' }} spacing={3}>
+    <Stack direction="column" sx={{ height: '100vh' }}>
       <Header />
       <Main>{props.children}</Main>
       <Footer />

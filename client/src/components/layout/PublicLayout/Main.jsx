@@ -7,7 +7,7 @@ const StyledMain = styled('div')({
   flexDirection: 'column',
   justifyContent: 'left',
   flex: '1 0 auto',
-  padding: '5% 0',
+  padding: '1rem 0',
 });
 
 const Main = (props) => {

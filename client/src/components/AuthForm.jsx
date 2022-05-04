@@ -17,7 +17,7 @@ const AuthForm = (props) => {
   };
 
   const StyledBox = styled('div')({
-    padding: '5% 0',
+    padding: '15% 5%',
   });
 
   return (

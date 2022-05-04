@@ -18,7 +18,7 @@ const AppRouter = () => {
 
   return (
     <TransitionGroup component={null}>
-      <CSSTransition key={location.pathname} classNames="fade" timeout={3000}>
+      <CSSTransition key={location.pathname} classNames="fade" timeout={300}>
         <Routes location={location}>
           {publicRoutes.map(({ path, element }) => (
             <Route key={path} path={path} element={element} exact />
