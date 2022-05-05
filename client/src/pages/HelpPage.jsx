@@ -1,8 +1,8 @@
 import React from 'react';
 import PublicLayout from '../components/layout/PublicLayout/PublicLayout';
 import { Container, Stack } from '@mui/material';
-import HelpForm from '../components/Help/HelpForm';
-import HelpPreview from '../components/Help/HelpPreview';
+import HelpForm from '../components/help/HelpForm';
+import HelpPreview from '../components/help/HelpPreview';
 
 const boxContainer = {
   display: 'flex',

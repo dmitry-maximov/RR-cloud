@@ -1,8 +1,5 @@
 import React from 'react';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
+import { Box, TextField, Stack, Button } from '@mui/material';
 
 const RegistrationForm = () => {
   return (
@@ -23,12 +20,7 @@ const RegistrationForm = () => {
         size="small"
         variant="standard"
       />
-      <TextField
-        fullWidth
-        label="E-mail адрес"
-        size="small"
-        variant="standard"
-      />
+      <TextField fullWidth label="E-mail" size="small" variant="standard" />
 
       <TextField
         fullWidth

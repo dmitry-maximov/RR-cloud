@@ -1,21 +1,21 @@
 import React from 'react';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import LoginPreview from '../components/LoginPreview';
-import AuthForm from '../components/AuthForm';
 import { useLocation } from 'react-router-dom';
+import { Box, Container } from '@mui/material';
+import LoginPreview from '../components/auth/LoginPreview';
+import AuthForm from '../components/auth/AuthForm';
+import LoginForm from '../components/auth/LoginForm';
+import RegistrationForm from '../components/auth/RegistrationForm';
+import { styled } from '@mui/material/styles';
 import { LOGIN_PAGE } from '../utils/const';
-import LoginForm from '../components/LoginForm';
-import RegistrationForm from '../components/RegistrationForm';
 
-const boxContainer = {
+const StyledContainer = styled(Container)({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   height: '100vh',
-};
+});
 
-const boxWrapper = {
+const StyledBox = styled(Box)({
   display: 'flex',
   width: '60vw',
   height: '65vh',
@@ -27,23 +27,23 @@ const boxWrapper = {
     rgb(255 221 199 / 50%) 0px 0.0625em 0.0625em, 
     rgb(255 221 199 / 50%) 0px 0.125em 0.5em, 
     rgb(255 221 199 / 5%) 0px 0px 0px 1px inset`,
-};
+});
 
-const LoginPage = () => {
+const AuthPage = () => {
   const location = useLocation();
   const isLogin = location.pathname === LOGIN_PAGE;
   return (
     <React.Fragment>
-      <Container sx={boxContainer}>
-        <Box sx={boxWrapper}>
+      <StyledContainer>
+        <StyledBox>
           <AuthForm caption={isLogin ? 'Авторизация' : 'Регистрация'}>
             {isLogin ? <LoginForm /> : <RegistrationForm />}
           </AuthForm>
           <LoginPreview isLogin={isLogin} />
-        </Box>
-      </Container>
+        </StyledBox>
+      </StyledContainer>
     </React.Fragment>
   );
 };
 
-export default LoginPage;
+export default AuthPage;

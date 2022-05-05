@@ -1,6 +1,6 @@
 import Space from '../pages/SpacePage';
 import HelpPage from '../pages/HelpPage';
-import LoginPage from '../pages/LoginPage';
+import AuthPage from '../pages/AuthPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import StartPage from '../pages/StartPage';
 import AboutPage from '../pages/AboutPage';
@@ -25,11 +25,11 @@ export const publicRoutes = [
   },
   {
     path: LOGIN_PAGE,
-    element: <LoginPage />,
+    element: <AuthPage />,
   },
   {
     path: REGISTRATION_PAGE,
-    element: <LoginPage />,
+    element: <AuthPage />,
   },
   {
     path: ABOUT_PAGE,

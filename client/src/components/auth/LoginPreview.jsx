@@ -1,21 +1,18 @@
 import React from 'react';
-import Box from '@mui/material/Box';
-import { Typography } from '@mui/material';
-import WbCloudyIcon from '@mui/icons-material/WbCloudy';
-import { orange } from '@mui/material/colors';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import { styled } from '@mui/material/styles';
-import Flex from './UI/Flex';
 import { Link } from 'react-router-dom';
-import { START_PAGE, REGISTRATION_PAGE, LOGIN_PAGE } from '../utils/const';
+import { Box, Typography, Stack, Button } from '@mui/material';
+import Flex from '../ui/Flex';
+import { styled } from '@mui/material/styles';
+import { orange } from '@mui/material/colors';
+import WbCloudyIcon from '@mui/icons-material/WbCloudy';
+import { START_PAGE, REGISTRATION_PAGE, LOGIN_PAGE } from '../../utils/const';
 
-const boxWrapper = {
+const StyledBox = styled(Box)({
   flex: 1,
   overflow: 'hidden',
   px: 3,
   backgroundColor: '#FFF2E5',
-};
+});
 
 const Item = styled('div')(({ theme }) => ({
   color: theme.palette.text.primary,
@@ -23,7 +20,7 @@ const Item = styled('div')(({ theme }) => ({
 
 const LoginPreview = ({ isLogin }) => {
   return (
-    <Box sx={boxWrapper}>
+    <StyledBox>
       <Flex
         direction={'column'}
         alignItems={'top'}
@@ -104,7 +101,7 @@ const LoginPreview = ({ isLogin }) => {
           )}
         </Stack>
       </Flex>
-    </Box>
+    </StyledBox>
   );
 };
 

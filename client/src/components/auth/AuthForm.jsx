@@ -1,8 +1,5 @@
 import React from 'react';
-import Box from '@mui/material/Box';
-import { Typography } from '@mui/material';
-import Stack from '@mui/material/Stack';
-
+import { Box, Typography, Stack } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 const AuthForm = (props) => {
