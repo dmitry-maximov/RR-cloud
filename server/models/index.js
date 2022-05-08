@@ -11,3 +11,16 @@ const User = sequelize.define('user', {
   isActivated: { type: DataTypes.BOOLEAN, defaultValue: false },
   activationLink: { type: DataTypes.STRING },
 });
+
+const Token = sequelize.define('token', {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  refreshToken: { type: DataTypes.TEXT, allowNull: false },
+});
+
+User.hasOne(Token);
+Token.belongsTo(User);
+
+module.exports = {
+  User,
+  Token,
+};
