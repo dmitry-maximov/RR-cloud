@@ -1,8 +1,17 @@
 const userService = require('../services/userServices');
+const { validationResult } = require('express-validator');
+const ErrorHandler = require('../handlers/errorHandlers');
 
 class UserController {
   async registration(req, res, next) {
     try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return next(
+          ErrorHandler.badRequest('Ошибка при валидации', errors.array())
+        );
+      }
+
       const { email, password, name, family, login } = req.body;
       const user = await userService.registration(
         email,
@@ -23,6 +32,13 @@ class UserController {
 
   async login(req, res, next) {
     try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return next(
+          ErrorHandler.badRequest('Ошибка при валидации', errors.array())
+        );
+      }
+
       const { email, password } = req.body;
       const user = await userService.login(email, password);
       res.cookie('refreshToken', user.refreshToken, {

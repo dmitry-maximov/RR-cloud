@@ -45,7 +45,7 @@ class UserService {
     }
     const isPassEquals = await bcrypt.compare(password, user.password);
     if (!isPassEquals) {
-      throw ApiError.BadRequest('Неверный пароль');
+      throw ErrorHandler.badRequest('Неверный пароль');
     }
 
     const userDto = new UserDto(user);
@@ -71,12 +71,12 @@ class UserService {
 
   async refresh(refreshToken) {
     if (!refreshToken) {
-      throw ErrorHandler.UnauthorizedError();
+      throw ErrorHandler.unauthorizedError();
     }
     const userData = tokenService.validateRefreshToken(refreshToken);
     const tokenFromDb = await tokenService.findToken(refreshToken);
     if (!userData || !tokenFromDb) {
-      throw ErrorHandler.UnauthorizedError();
+      throw ErrorHandler.unauthorizedError();
     }
     const user = await User.findOne({ where: { id: userData.id } });
     const userDto = new UserDto(user);
