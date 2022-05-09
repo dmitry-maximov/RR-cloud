@@ -7,7 +7,7 @@ const User = sequelize.define('user', {
   password: { type: DataTypes.STRING, allowNull: false },
   name: { type: DataTypes.STRING },
   family: { type: DataTypes.STRING },
-  login: { type: DataTypes.STRING },
+  login: { type: DataTypes.STRING, allowNull: false },
   isActivated: { type: DataTypes.BOOLEAN, defaultValue: false },
   activationLink: { type: DataTypes.STRING },
 });
