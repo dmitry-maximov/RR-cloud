@@ -4,6 +4,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const sequelize = require('./db');
 const router = require('./routers/index');
+const errorMiddleware = require('./middlewares/errorMiddleware');
 
 const PORT = process.env.PORT || 6000;
 
@@ -12,6 +13,8 @@ app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 app.use('/api', router);
+
+app.use(errorMiddleware);
 
 const start = async () => {
   try {

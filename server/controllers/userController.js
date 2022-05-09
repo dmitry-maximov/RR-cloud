@@ -17,7 +17,7 @@ class UserController {
       });
       return res.json(user);
     } catch (e) {
-      console.error(e);
+      next(e);
     }
   }
 
@@ -31,7 +31,7 @@ class UserController {
       });
       return res.json(user);
     } catch (e) {
-      console.error(e);
+      next(e);
     }
   }
 
@@ -42,7 +42,7 @@ class UserController {
       res.clearCookie('refreshToken');
       return res.json(token);
     } catch (e) {
-      console.error(e);
+      next(e);
     }
   }
 
@@ -52,7 +52,7 @@ class UserController {
       await userService.activate(activationLink);
       return res.redirect(process.env.CLIENT_URL); // после клика по ссылке переводем юзверя на главную страницу
     } catch (e) {
-      console.error(e);
+      next(e);
     }
   }
 
@@ -66,7 +66,7 @@ class UserController {
       });
       return res.json(user);
     } catch (e) {
-      console.error(e);
+      next(e);
     }
   }
 }
