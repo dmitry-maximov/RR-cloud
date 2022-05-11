@@ -1,24 +1,23 @@
 import { setUser, logOut } from '../reducers/userReducer';
 import AuthService from '../api/AuthService';
 
-export const registration =
-  (async) => (email, password, name, family, login) => {
-    return async (dispatch) => {
-      try {
-        const response = await AuthService.registration(
-          email,
-          password,
-          name,
-          family,
-          login
-        );
-        localStorage.setItem('token', response.data.accessToken);
-        dispatch(setUser(response.data.user));
-      } catch (e) {}
-    };
+export const registration = (email, password, name, family, login) => {
+  return async (dispatch) => {
+    try {
+      const response = await AuthService.registration(
+        email,
+        password,
+        name,
+        family,
+        login
+      );
+      localStorage.setItem('token', response.data.accessToken);
+      dispatch(setUser(response.data.user));
+    } catch (e) {}
   };
+};
 
-export const login = (async) => (email, password) => {
+export const login = (email, password) => {
   return async (dispatch) => {
     try {
       const response = await AuthService.login(email, password);
@@ -28,7 +27,7 @@ export const login = (async) => (email, password) => {
   };
 };
 
-export const logout = (async) => () => {
+export const logout = () => {
   return async (dispatch) => {
     try {
       await AuthService.logout();
@@ -38,7 +37,7 @@ export const logout = (async) => () => {
   };
 };
 
-export const checkAuth = (async) => () => {
+export const checkAuth = () => {
   return async (dispatch) => {
     try {
       const response = await AuthService.checkAuth();
