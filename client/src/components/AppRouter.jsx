@@ -4,7 +4,7 @@ import { publicRoutes, privateRoutes } from '../routers';
 import { useDispatch, useSelector } from 'react-redux';
 import { NOT_FOUND_PAGE } from '../utils/const';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
-import { auth } from '../actions/user';
+import { checkAuth } from '../actions/user';
 import PrivateLayout from './layout/PrivateLayout/PrivateLayout';
 
 const AppRouter = () => {
@@ -12,9 +12,9 @@ const AppRouter = () => {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  // useEffect(() => {
-  //   dispatch(auth());
-  // }, []);
+  useEffect(() => {
+    dispatch(checkAuth());
+  }, []);
 
   return (
     <TransitionGroup component={null}>
