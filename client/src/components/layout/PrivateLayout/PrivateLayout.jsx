@@ -11,6 +11,10 @@ const PrivateLayout = (props) => {
     boxShadow: 'rgba(0, 0, 0, 0.05) 0px 0px 0px 1px',
   }));
 
+  const StyledMain = styled('div')({
+    padding: '.5rem 2rem',
+  });
+
   return (
     <Grid container xs={{ padding: '0', margin: '0' }}>
       <Grid item xs={5} sm={4} md={3} xl={2}>
@@ -19,7 +23,7 @@ const PrivateLayout = (props) => {
       <Grid item xs={7} sm={8} md={9} xl={10}>
         <Item>
           <NavBar />
-          <main>{props.children}</main>
+          <StyledMain>{props.children}</StyledMain>
         </Item>
       </Grid>
     </Grid>
