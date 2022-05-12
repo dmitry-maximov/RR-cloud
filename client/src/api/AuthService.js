@@ -19,7 +19,7 @@ export default class AuthService {
   }
 
   static async logout() {
-    return await $api.post('auth/login');
+    return await $api.post('auth/logout');
   }
 
   static async checkAuth() {
