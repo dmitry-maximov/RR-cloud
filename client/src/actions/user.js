@@ -1,30 +1,56 @@
-import { setUser } from '../reducers/userReducer';
+import { setUser, logOut } from '../reducers/userReducer';
+import AuthService from '../api/AuthService';
 
-export const registration = (async) => (email, password) => {
-  try {
-    //TO DO:
-  } catch (e) {}
-};
-
-export const login = (async) => (email, password) => {
+export const registration = (email, password, name, family, login) => {
   return async (dispatch) => {
     try {
-      //TO DO:
-      const user = {};
-      dispatch(setUser(user));
-    } catch (e) {}
+      const response = await AuthService.registration(
+        email,
+        password,
+        name,
+        family,
+        login
+      );
+      localStorage.setItem('token', response.data.accessToken);
+      dispatch(setUser(response.data.user));
+    } catch (e) {
+      alert(e.response.data.message);
+    }
   };
 };
 
-export const auth = () => {
+export const login = (email, password) => {
   return async (dispatch) => {
     try {
-      //TO DO:
-      const user = {};
-      dispatch(setUser(user));
-      localStorage.setItem('token', user);
+      const response = await AuthService.login(email, password);
+      localStorage.setItem('token', response.data.accessToken);
+      dispatch(setUser(response.data.user));
     } catch (e) {
+      alert(e.response.data.message);
+    }
+  };
+};
+
+export const logout = () => {
+  return async (dispatch) => {
+    try {
+      await AuthService.logout();
       localStorage.removeItem('token');
+      dispatch(logOut());
+    } catch (e) {
+      alert(e.response.data.message);
+    }
+  };
+};
+
+export const checkAuth = () => {
+  return async (dispatch) => {
+    try {
+      const response = await AuthService.checkAuth();
+      localStorage.setItem('token', response.data.accessToken);
+      dispatch(setUser(response.data.user));
+    } catch (e) {
+      alert(e.response.data.message);
     }
   };
 };

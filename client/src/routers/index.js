@@ -1,13 +1,11 @@
 import Space from '../pages/SpacePage';
 import HelpPage from '../pages/HelpPage';
 import AuthPage from '../pages/AuthPage';
-import NotFoundPage from '../pages/NotFoundPage';
 import StartPage from '../pages/StartPage';
 import AboutPage from '../pages/AboutPage';
 import {
   HELP_PAGE,
   LOGIN_PAGE,
-  NOT_FOUND_PAGE,
   START_PAGE,
   CLOUD_SPAСE_PAGE,
   REGISTRATION_PAGE,
@@ -24,20 +22,8 @@ export const publicRoutes = [
     element: <HelpPage />,
   },
   {
-    path: LOGIN_PAGE,
-    element: <AuthPage />,
-  },
-  {
-    path: REGISTRATION_PAGE,
-    element: <AuthPage />,
-  },
-  {
     path: ABOUT_PAGE,
     element: <AboutPage />,
-  },
-  {
-    path: NOT_FOUND_PAGE,
-    element: <NotFoundPage />,
   },
 ];
 
@@ -45,5 +31,16 @@ export const privateRoutes = [
   {
     path: CLOUD_SPAСE_PAGE,
     element: <Space />,
+  },
+];
+
+export const authRoutes = [
+  {
+    path: LOGIN_PAGE,
+    element: <AuthPage />,
+  },
+  {
+    path: REGISTRATION_PAGE,
+    element: <AuthPage />,
   },
 ];

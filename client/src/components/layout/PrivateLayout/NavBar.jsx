@@ -1,5 +1,5 @@
 import React from 'react';
-import AppBar from '@mui/material/AppBar';
+import { useSelector, useDispatch } from 'react-redux';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -9,14 +9,12 @@ import Menu from '@mui/material/Menu';
 import { Avatar } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import SettingsIcon from '@mui/icons-material/Settings';
+import { logout } from '../../../actions/user';
 
 const NavBar = () => {
-  const [auth, setAuth] = React.useState(true);
+  const { isAuth, currentUser } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const handleChange = (event) => {
-    setAuth(event.target.checked);
-  };
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -25,12 +23,13 @@ const NavBar = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   return (
     <Box sx={{ flexGrow: 1, padding: '2rem 1rem 0rem 1rem' }}>
       {/* <AppBar position="static"> */}
       <Toolbar>
         <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
-          Hello
+          Привет, {currentUser.login}
         </Typography>
         <IconButton size="large" aria-haspopup="true" color="inherit">
           <SearchIcon />
@@ -38,10 +37,13 @@ const NavBar = () => {
         <IconButton size="large" aria-haspopup="true" color="inherit">
           <SettingsIcon />
         </IconButton>
-        {auth && (
+        {isAuth && (
           <div>
             <IconButton onClick={handleMenu} sx={{ p: 0 }}>
-              <Avatar alt="D" src="/static/images/avatar/2.jpg" />
+              <Avatar
+                alt={currentUser.login}
+                src="/static/images/avatar/2.jpg"
+              />
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -58,8 +60,9 @@ const NavBar = () => {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>Profile</MenuItem>
-              <MenuItem onClick={handleClose}>My account</MenuItem>
+              <MenuItem onClick={handleClose}>Профиль</MenuItem>
+              <MenuItem onClick={handleClose}>Мой аккаунт</MenuItem>
+              <MenuItem onClick={() => dispatch(logout())}>Выйти</MenuItem>
             </Menu>
           </div>
         )}
