@@ -5,11 +5,15 @@ import SideBar from './SideBar';
 import styled from 'styled-components';
 
 const PrivateLayout = (props) => {
-  const Item = styled('div')(({ theme }) => ({
+  const StyledPaper = styled('div')({
     background: '#f7f8fa',
     minHeight: '100vh',
     boxShadow: 'rgba(0, 0, 0, 0.05) 0px 0px 0px 1px',
-  }));
+  });
+
+  const StyledMain = styled('div')({
+    padding: '.5rem 2rem',
+  });
 
   return (
     <Grid container xs={{ padding: '0', margin: '0' }}>
@@ -17,10 +21,10 @@ const PrivateLayout = (props) => {
         <SideBar />
       </Grid>
       <Grid item xs={7} sm={8} md={9} xl={10}>
-        <Item>
+        <StyledPaper>
           <NavBar />
-          <main>{props.children}</main>
-        </Item>
+          <StyledMain>{props.children}</StyledMain>
+        </StyledPaper>
       </Grid>
     </Grid>
   );
