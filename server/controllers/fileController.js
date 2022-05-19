@@ -1,24 +1,29 @@
 const ErrorHandler = require('../handlers/errorHandlers');
+const FileService = require('../services/fileService');
 
 class FileController {
   async createDirectory(req, res, next) {
     try {
-      const { name, type, parent, currentUser } = req.body;
-      return res.json();
-    } catch (e) {
-      next(e);
-    }
-  }
-
-  async uploadFile(req, res, next) {
-    try {
-      return res.json();
+      const { name, type, parent } = req.body;
+      const { user } = req;
+      const file = await FileService.createDirectory(name, type, parent, user);
+      return res.json(file);
     } catch (e) {
       next(e);
     }
   }
 
   async getFiles(req, res, next) {
+    try {
+      const { userId, parent } = req.body;
+      const files = await FileService.getFiles(userId, parent);
+      return res.json(files);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async uploadFile(req, res, next) {
     try {
       return res.json();
     } catch (e) {

@@ -2,6 +2,7 @@
 
 const ErrorHandler = require('../handlers/errorHandlers');
 const TokenService = require('../services/tokenService');
+const jwt = require('jsonwebtoken');
 
 module.exports = function (req, res, next) {
   try {
@@ -19,7 +20,7 @@ module.exports = function (req, res, next) {
     if (!user) {
       return next(ErrorHandler.unauthorizedError());
     }
-
+    req.user = user;
     next();
   } catch (e) {
     return next(ErrorHandler.unauthorizedError());
