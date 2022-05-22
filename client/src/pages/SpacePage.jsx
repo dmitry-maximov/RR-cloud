@@ -1,7 +1,8 @@
 import React from 'react';
+import Disk from '../components/disk/Disk';
 
 const SpacePage = () => {
-  return <div>Форма для управлнеия</div>;
+  return <Disk />;
 };
 
 export default SpacePage;

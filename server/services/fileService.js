@@ -35,7 +35,7 @@ class FileService {
       userId: user.id,
       type: type,
       parent: parent,
-      userUuid: '35194c78-259d-4e9a-95d1-6fc244b051a7',
+      userUuid: 'to do',
       name: name,
     });
 
@@ -59,7 +59,10 @@ class FileService {
   }
 
   async getFiles(userId, parent) {
-    const files = await File.findAll({ where: { userId, parent } });
+    let files = null;
+    if (parent) files = await File.findAll({ where: { userId, parent } });
+    else
+      files = await File.findAll({ where: { userId: userId, parent: null } });
     return files;
   }
 
