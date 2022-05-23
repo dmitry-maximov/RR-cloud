@@ -5,6 +5,7 @@ module.exports = class UserDto {
   family;
   login;
   isActivated;
+  uuid;
 
   constructor(user) {
     this.id = user.id;
@@ -13,5 +14,6 @@ module.exports = class UserDto {
     this.family = user.family;
     this.login = user.login;
     this.isActivated = user.isActivated;
+    this.uuid = user.activationLink;
   }
 };

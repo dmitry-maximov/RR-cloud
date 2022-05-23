@@ -7,7 +7,7 @@ module.exports = class FileDto {
   parent;
   child; //тут массив File
   userId;
-  userUuid;
+  uuid; // уникальный каталог юзверя создается при регистрации
 
   constructor(file) {
     this.id = file.id;
@@ -18,6 +18,6 @@ module.exports = class FileDto {
     this.parent = file.parent;
     this.child = file.child;
     this.userId = file.userId;
-    this.userUuid = file.userUuid;
+    this.uuid = file.uuid;
   }
 };

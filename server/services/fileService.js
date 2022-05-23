@@ -10,7 +10,7 @@ class FileService {
     const filePath = path.join(
       dirPath,
       '/files',
-      `${file.userUuid}`,
+      `${file.uuid}`,
       `${file.path}`
     );
     //const filePath = `${process.env.FILE_PATH}\\${file.userUuid}\\${file.path}`;
@@ -35,7 +35,7 @@ class FileService {
       userId: user.id,
       type: type,
       parent: parent,
-      userUuid: 'to do',
+      uuid: user.uuid,
       name: name,
     });
 

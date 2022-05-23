@@ -2,7 +2,6 @@
 
 const ErrorHandler = require('../handlers/errorHandlers');
 const TokenService = require('../services/tokenService');
-const jwt = require('jsonwebtoken');
 
 module.exports = function (req, res, next) {
   try {
