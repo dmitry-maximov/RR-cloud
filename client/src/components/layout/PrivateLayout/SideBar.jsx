@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button, Stack, Typography } from '@mui/material';
 import { orange } from '@mui/material/colors';
-import AddIcon from '@mui/icons-material/Add';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -18,6 +17,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Link } from 'react-router-dom';
 import { START_PAGE } from '../../../utils/const';
+import AddedModal from './AddedModal';
 
 const SideBar = () => {
   const Item = styled('div')(({ theme }) => ({
@@ -68,15 +68,7 @@ const SideBar = () => {
             </Stack>
           </Item>
         </Link>
-
-        <Button
-          variant="contained"
-          size="large"
-          sx={{ padding: '1rem' }}
-          startIcon={<AddIcon />}
-        >
-          Добавить
-        </Button>
+        <AddedModal />
         <Item>
           <List>
             <ListItem button>
