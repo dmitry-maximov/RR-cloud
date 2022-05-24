@@ -1,15 +1,15 @@
-const { File } = require("../models/index");
-const fs = require("fs");
-const path = require("path");
-const ErrorHandler = require("../handlers/errorHandlers");
-const FileDto = require("../dtos/fileDto");
+const { File } = require('../models/index');
+const fs = require('fs');
+const path = require('path');
+const ErrorHandler = require('../handlers/errorHandlers');
+const FileDto = require('../dtos/fileDto');
 
 class FileService {
   createDirectoryForFile(file) {
     const dirPath = path.dirname(__dirname);
     const filePath = path.join(
       dirPath,
-      "/files",
+      '/files',
       `${file.uuid}`,
       `${file.path}`
     );
@@ -18,13 +18,13 @@ class FileService {
       try {
         if (!fs.existsSync(filePath)) {
           fs.mkdirSync(filePath);
-          return resolve({ message: "Файл успешно создан" });
+          return resolve({ message: 'Файл успешно создан' });
         } else {
-          return reject(ErrorHandler.internalServer("Файл уже существует"));
+          return reject(ErrorHandler.internalServer('Файл уже существует'));
         }
       } catch (e) {
         throw ErrorHandler.internalServer(
-          "Ошибка при создании каталога на сервере"
+          'Ошибка при создании каталога на сервере'
         );
       }
     });
@@ -66,7 +66,52 @@ class FileService {
     return files;
   }
 
-  async uploadFile() {}
+  async uploadFile(file, user, parent) {
+    const dirPath = path.dirname(__dirname);
+    const parentFile = parent
+      ? await File.findOne({ where: { id: parent } })
+      : null;
+
+    //TO DO:
+    //(user.usedSpace + file.size > user.diskSpace) => нет места
+
+    let filePath;
+    if (parentFile) {
+      filePath = path.join(
+        dirPath,
+        '/files',
+        `${user.uuid}`,
+        `${parentFile.path}`,
+        `${file.name}`
+      );
+    } else {
+      filePath = path.join(dirPath, '/files', `${user.uuid}`, `${file.name}`);
+    }
+
+    if (fs.existsSync(filePath)) {
+      throw ErrorHandler.badRequest('Файл уже существует');
+    }
+
+    file.mv(filePath);
+
+    const type = file.name.split('.').pop();
+    let fpath = file.name;
+    if (parent) {
+      fpath = parentFile.path + '\\' + file.name;
+    }
+
+    const savedFileDto = new FileDto({
+      name: file.name,
+      type,
+      size: file.size,
+      path: fpath,
+      parent: parentFile?.id,
+      userId: user.id,
+    });
+
+    const savedFile = await File.create(savedFileDto);
+    return savedFile;
+  }
 
   async downloadFile() {}
 

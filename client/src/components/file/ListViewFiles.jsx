@@ -7,7 +7,7 @@ import {
 } from '@mui/material';
 import File from './File';
 
-const ListFiles = ({ files }) => {
+const ListViewFiles = ({ files }) => {
   return (
     <Table sx={{ minWidth: 650 }} aria-label="simple table">
       <TableHead>
@@ -28,4 +28,4 @@ const ListFiles = ({ files }) => {
   );
 };
 
-export default ListFiles;
+export default ListViewFiles;

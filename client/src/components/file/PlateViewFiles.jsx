@@ -1,7 +1,7 @@
 import { Grid } from '@mui/material';
 import File from './File';
 
-const PlateFiles = ({ files }) => {
+const PlateViewFiles = ({ files }) => {
   return (
     <Grid
       container
@@ -17,4 +17,4 @@ const PlateFiles = ({ files }) => {
   );
 };
 
-export default PlateFiles;
+export default PlateViewFiles;

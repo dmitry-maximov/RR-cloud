@@ -2,8 +2,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { pushToHistory, setCurrentDir } from '../../reducers/fileReducer';
 import { Grid, TableCell, TableRow, Typography } from '@mui/material';
 import folderLogo from '../../img/m_folder.png';
+import fileLogo from '../../img/m_file.png';
 import folderPlateLogo from '../../img/folder.png';
-import fileLogo from '../../img/file.png';
+import filePlateLogo from '../../img/file.png';
 import { formatDate } from '../../utils/formatting';
 import { Box } from '@mui/system';
 
@@ -15,7 +16,7 @@ const File = ({ file }) => {
     if (file.type === 'dir') {
       dispatch(setCurrentDir(file.id));
       dispatch(pushToHistory(currentDir));
-    }
+    } else return;
   };
 
   return (
@@ -62,8 +63,10 @@ const File = ({ file }) => {
                 },
               }}
             >
-              <img src={file.type === 'dir' ? folderPlateLogo : fileLogo} />
-              <Typography variant="h6">{file.name}</Typography>
+              <img
+                src={file.type === 'dir' ? folderPlateLogo : filePlateLogo}
+              />
+              <Typography variant="p">{file.name}</Typography>
             </Box>
           </Grid>
         </>

@@ -22,3 +22,14 @@ export const createDirectory = (name, dirId) => {
     }
   };
 };
+
+export const uploadFile = (file, dirId) => {
+  return async (dispatch) => {
+    try {
+      const response = await FileService.uploadFile(file, dirId);
+      dispatch(addFile(response.data));
+    } catch (e) {
+      alert(e.response.data.message);
+    }
+  };
+};

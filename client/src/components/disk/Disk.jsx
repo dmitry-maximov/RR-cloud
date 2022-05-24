@@ -1,81 +1,81 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  setCurrentDir,
-  setListView,
-  setPlateView,
-} from '../../reducers/fileReducer';
-import { Stack, IconButton } from '@mui/material';
-import FileList from './FileList';
-import { getFiles } from '../../actions/file';
-import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
-import ViewListIcon from '@mui/icons-material/ViewList';
-import SortIcon from '@mui/icons-material/Sort';
-import ViewModuleIcon from '@mui/icons-material/ViewModule';
+
+import FileList from '../file/FileList';
+import { getFiles, uploadFile } from '../../actions/file';
+import HeaderDisk from './HeaderDisk';
+import DiskUpload from './DiskUpload';
+import styled from '@emotion/styled';
+
+const DropArea = styled('div')(({ theme }) => ({
+  // color: theme.palette.primary.secondary,
+  color: '#566885',
+  width: '100%',
+  height: '75vh',
+  margin: '20px',
+  border: 'dashed #566885 2px',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  fontSize: '3rem',
+}));
 
 const Disk = () => {
   const dispatch = useDispatch();
-  const { currentDir, history, view } = useSelector((state) => state.files);
+  const { currentDir } = useSelector((state) => state.files);
+  const [dragEnter, setDragEnter] = useState(false);
 
   useEffect(() => {
     dispatch(getFiles(currentDir));
   }, [currentDir]);
 
-  const backClickHandler = () => {
-    const backDirId = history.pop();
-    dispatch(setCurrentDir(backDirId));
+  const fileUploadHandler = (e) => {
+    const files = [...e.target.files];
+    files.forEach((file) => dispatch(uploadFile(file, currentDir)));
   };
 
-  const setListViewClickHandler = () => {
-    dispatch(setListView());
+  const dragEnterHandler = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragEnter(true);
   };
 
-  const setPlateViewClickHandler = () => {
-    dispatch(setPlateView());
+  const dragLeaveHandler = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragEnter(false);
+  };
+
+  const dropHandler = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    let files = [...e.dataTransfer.files];
+    files.forEach((file) => dispatch(uploadFile(file, currentDir)));
+    setDragEnter(false);
   };
 
   return (
     <div>
-      <Stack
-        direction="row"
-        justifyContent="space-between"
-        spacing={2}
-        sx={{
-          padding: '.25rem',
-        }}
-      >
-        <IconButton
-          variant="contained"
-          size="large"
-          aria-haspopup="true"
-          color={history.length > 0 ? 'primary' : 'inherit'}
-          onClick={() => backClickHandler()}
+      {!dragEnter ? (
+        <div
+          onDragEnter={dragEnterHandler}
+          onDragLeave={dragLeaveHandler}
+          onDragOver={dragEnterHandler}
         >
-          <KeyboardBackspaceIcon />
-        </IconButton>
-        <div>
-          <IconButton size="large" aria-haspopup="true" color="inherit">
-            <SortIcon />
-          </IconButton>
-          <IconButton
-            size="large"
-            aria-haspopup="true"
-            color={view === 'list' ? 'primary' : 'inherit'}
-            onClick={() => setListViewClickHandler()}
-          >
-            <ViewListIcon />
-          </IconButton>
-          <IconButton
-            size="large"
-            aria-haspopup="true"
-            color={view === 'plate' ? 'primary' : 'inherit'}
-            onClick={() => setPlateViewClickHandler()}
-          >
-            <ViewModuleIcon />
-          </IconButton>
+          <DiskUpload handler={fileUploadHandler} />
+          <HeaderDisk />
+          <FileList />
         </div>
-      </Stack>
-      <FileList />
+      ) : (
+        <DropArea
+          onDrop={dropHandler}
+          onDragEnter={dragEnterHandler}
+          onDragLeave={dragLeaveHandler}
+          onDragOver={dragEnterHandler}
+        >
+          Перетащите файлы сюда
+        </DropArea>
+      )}
     </div>
   );
 };

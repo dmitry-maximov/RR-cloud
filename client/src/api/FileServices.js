@@ -8,4 +8,15 @@ export default class FileService {
   static async createDirectory(name, dirId) {
     return await $auth_api.post(`files`, { name, parent: dirId, type: `dir` });
   }
+
+  static async uploadFile(file, dirId) {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    if (dirId) {
+      formData.append('parent', dirId);
+    }
+
+    return await $auth_api.post(`files/upload`, formData);
+  }
 }

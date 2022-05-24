@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const sequelize = require('./db');
 const router = require('./routers/index');
 const errorMiddleware = require('./middlewares/errorMiddleware');
+const fileUpload = require('express-fileupload');
 
 const PORT = process.env.PORT || 6000;
 
@@ -15,6 +16,7 @@ app.use(
     origin: process.env.CLIENT_URL,
   })
 );
+app.use(fileUpload({}));
 app.use(express.json());
 app.use(cookieParser());
 app.use('/api', router);
