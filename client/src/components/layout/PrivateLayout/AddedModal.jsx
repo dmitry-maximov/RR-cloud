@@ -20,26 +20,27 @@ const style = {
 const validationSchema = yup.object({
   name: yup
     .string('Новая папка')
-    .min(5, 'Пароль должен иметь как минимум 5 символов')
+    .min(3, 'Название папки должно сожержать как минимум 3 символа')
     .required('Поле обязательно к заполнению'),
+  // .matches(/^[aA-zZ\s]+$/, 'Название должно содержать только буквы'),
 });
 
 export default function AddedModal() {
-  //TO DO:
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const dispatch = useDispatch();
-  const dirId = useSelector((state) => state.files.currenDir);
+  const { currentDir } = useSelector((state) => state.files);
 
   const formik = useFormik({
     initialValues: {
       name: ``,
     },
     validationSchema: validationSchema,
-    onSubmit: ({ name }) => {
-      debugger;
-      dispatch(createDirectory(name, dirId));
+    onSubmit: (values, { resetForm }) => {
+      dispatch(createDirectory(values.name, currentDir));
+      resetForm();
+      handleClose();
     },
   });
 

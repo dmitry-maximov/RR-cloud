@@ -1,4 +1,4 @@
-import { setFiles } from '../reducers/fileReducer';
+import { addFile, setFiles } from '../reducers/fileReducer';
 import FileService from '../api/FileServices';
 
 export const getFiles = (dirId) => {
@@ -16,7 +16,7 @@ export const createDirectory = (name, dirId) => {
   return async (dispatch) => {
     try {
       const response = await FileService.createDirectory(name, dirId);
-      dispatch(setFiles(response.data));
+      dispatch(addFile(response.data));
     } catch (e) {
       alert(e.response.data.message);
     }
