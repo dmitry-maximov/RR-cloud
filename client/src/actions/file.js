@@ -11,3 +11,14 @@ export const getFiles = (dirId) => {
     }
   };
 };
+
+export const createDirectory = (name, dirId) => {
+  return async (dispatch) => {
+    try {
+      const response = await FileService.createDirectory(name, dirId);
+      dispatch(setFiles(response.data));
+    } catch (e) {
+      alert(e.response.data.message);
+    }
+  };
+};

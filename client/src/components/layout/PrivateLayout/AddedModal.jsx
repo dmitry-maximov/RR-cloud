@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import { Box, Button, Modal, Stack, TextField } from '@mui/material';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
 import AddIcon from '@mui/icons-material/Add';
+import { useDispatch, useSelector } from 'react-redux';
+import { createDirectory } from '../../../actions/file';
 
 const style = {
   position: 'absolute',
@@ -13,11 +17,31 @@ const style = {
   p: 4,
 };
 
+const validationSchema = yup.object({
+  name: yup
+    .string('Новая папка')
+    .min(5, 'Пароль должен иметь как минимум 5 символов')
+    .required('Поле обязательно к заполнению'),
+});
+
 export default function AddedModal() {
   //TO DO:
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const dispatch = useDispatch();
+  const dirId = useSelector((state) => state.files.currenDir);
+
+  const formik = useFormik({
+    initialValues: {
+      name: ``,
+    },
+    validationSchema: validationSchema,
+    onSubmit: ({ name }) => {
+      debugger;
+      dispatch(createDirectory(name, dirId));
+    },
+  });
 
   return (
     <div>
@@ -46,12 +70,16 @@ export default function AddedModal() {
             noValidate
             autoComplete="off"
           >
-            <form>
+            <form onSubmit={formik.handleSubmit}>
               <TextField
                 fullWidth
                 id="name"
                 name="name"
                 label="Новая папка"
+                value={formik.values.name}
+                onChange={formik.handleChange}
+                error={formik.touched.name && Boolean(formik.errors.name)}
+                helperText={formik.touched.name && formik.errors.name}
                 variant="standard"
               />
 

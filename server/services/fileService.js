@@ -1,15 +1,15 @@
-const { File } = require('../models/index');
-const fs = require('fs');
-const path = require('path');
-const ErrorHandler = require('../handlers/errorHandlers');
-const FileDto = require('../dtos/fileDto');
+const { File } = require("../models/index");
+const fs = require("fs");
+const path = require("path");
+const ErrorHandler = require("../handlers/errorHandlers");
+const FileDto = require("../dtos/fileDto");
 
 class FileService {
   createDirectoryForFile(file) {
     const dirPath = path.dirname(__dirname);
     const filePath = path.join(
       dirPath,
-      '/files',
+      "/files",
       `${file.uuid}`,
       `${file.path}`
     );
@@ -18,13 +18,13 @@ class FileService {
       try {
         if (!fs.existsSync(filePath)) {
           fs.mkdirSync(filePath);
-          return resolve({ message: 'Файл успешно создан' });
+          return resolve({ message: "Файл успешно создан" });
         } else {
-          return reject(ErrorHandler.internalServer('Файл уже существует'));
+          return reject(ErrorHandler.internalServer("Файл уже существует"));
         }
       } catch (e) {
         throw ErrorHandler.internalServer(
-          'Ошибка при создании каталога на сервере'
+          "Ошибка при создании каталога на сервере"
         );
       }
     });
