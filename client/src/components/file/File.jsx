@@ -47,7 +47,9 @@ const File = ({ file }) => {
           <TableCell align="center">
             {file.type === 'dir' ? '' : `Файл "${file.type}"`}
           </TableCell>
-          <TableCell align="center"> {formatSize(file.size)}</TableCell>
+          <TableCell align="center">
+            {file.size && formatSize(file.size)}
+          </TableCell>
         </TableRow>
       ) : (
         <>
