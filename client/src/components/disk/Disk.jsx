@@ -6,6 +6,7 @@ import { getFiles, uploadFile } from '../../actions/file';
 import HeaderDisk from './HeaderDisk';
 import DiskUpload from './DiskUpload';
 import styled from '@emotion/styled';
+import Uploader from '../uploader/Uploader';
 
 const DropArea = styled('div')(({ theme }) => ({
   // color: theme.palette.primary.secondary,
