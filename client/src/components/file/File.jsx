@@ -42,6 +42,14 @@ const File = ({ file }) => {
     setContextMenu(null);
   };
 
+  const downloadHandler = (e, file) => {
+    e.preventDefault();
+    //TO DO :
+    alert(`download file id=${file.id}`);
+
+    setContextMenu(null);
+  };
+
   const openContextMenuHandler = (e, file) => {
     e.preventDefault();
     setContextMenu(
@@ -68,6 +76,7 @@ const File = ({ file }) => {
         handleOpenFolder={openDirectoryHandler}
         handleAddFavorit={addedАavoritesHandler}
         handleMoveToTrash={moveToTrashHandler}
+        handleDownload={downloadHandler}
       />
       {view === 'list' ? (
         <TableRow

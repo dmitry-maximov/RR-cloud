@@ -1,6 +1,7 @@
 import { ListItemIcon, Menu, MenuItem } from '@mui/material';
 import StarHalfIcon from '@mui/icons-material/StarHalf';
 import DeleteIcon from '@mui/icons-material/Delete';
+import DownloadIcon from '@mui/icons-material/Download';
 
 const ContextMenu = ({
   contextMenu,
@@ -8,6 +9,7 @@ const ContextMenu = ({
   handleOpenFolder,
   handleAddFavorit,
   handleMoveToTrash,
+  handleDownload,
 }) => {
   return (
     <Menu
@@ -35,6 +37,12 @@ const ContextMenu = ({
           <DeleteIcon fontSize="small" />
         </ListItemIcon>
         Удалить
+      </MenuItem>
+      <MenuItem onClick={(e) => handleDownload(e, contextMenu.file)}>
+        <ListItemIcon>
+          <DownloadIcon fontSize="small" />
+        </ListItemIcon>
+        Скачать
       </MenuItem>
     </Menu>
   );
