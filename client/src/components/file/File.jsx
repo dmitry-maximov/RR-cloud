@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { pushToHistory, setCurrentDir } from '../../reducers/fileReducer';
 import { Grid, TableCell, TableRow, Typography } from '@mui/material';
@@ -7,20 +8,67 @@ import folderPlateLogo from '../../img/folder.png';
 import filePlateLogo from '../../img/file.png';
 import { formatDate, formatSize } from '../../utils/formatting';
 import { Box } from '@mui/system';
+import ContextMenu from '../contextmenu/ContextMenu';
 
 const File = ({ file }) => {
   const dispatch = useDispatch();
   const { currentDir, view } = useSelector((state) => state.files);
+  const [contextMenu, setContextMenu] = useState(null);
 
-  const openDirectoryHandler = (file) => {
+  const openDirectoryHandler = (e, file) => {
+    e.preventDefault();
+    if (e.ctrlKey) {
+      //TO DO : select file
+      return;
+    }
     if (file.type === 'dir') {
       dispatch(setCurrentDir(file.id));
       dispatch(pushToHistory(currentDir));
     } else return;
   };
 
+  const addedАavoritesHandler = (e, file) => {
+    e.preventDefault();
+    //TO DO :
+    alert(`move to favorit file id=${file.id}`);
+
+    setContextMenu(null);
+  };
+  const moveToTrashHandler = (e, file) => {
+    e.preventDefault();
+    //TO DO :
+    alert(`move to trash file id=${file.id}`);
+
+    setContextMenu(null);
+  };
+
+  const openContextMenuHandler = (e, file) => {
+    e.preventDefault();
+    setContextMenu(
+      contextMenu === null
+        ? {
+            mouseX: e.clientX + 2,
+            mouseY: e.clientY - 6,
+            file,
+          }
+        : null
+    );
+  };
+
+  const closeContextMenuHandler = (e) => {
+    e.preventDefault();
+    setContextMenu(null);
+  };
+
   return (
     <>
+      <ContextMenu
+        contextMenu={contextMenu}
+        handleClose={closeContextMenuHandler}
+        handleOpenFolder={openDirectoryHandler}
+        handleAddFavorit={addedАavoritesHandler}
+        handleMoveToTrash={moveToTrashHandler}
+      />
       {view === 'list' ? (
         <TableRow
           sx={{
@@ -30,8 +78,10 @@ const File = ({ file }) => {
               backgroundColor: '#0000000a',
               cursor: 'pointer',
             },
+            cursor: 'context-menu',
           }}
-          onClick={() => openDirectoryHandler(file)}
+          onClick={(e) => openDirectoryHandler(e, file)}
+          onContextMenu={(e) => openContextMenuHandler(e, file)}
         >
           <TableCell component="th" scope="row">
             <div style={{ margin: '.25rem 0 0 0' }}>
