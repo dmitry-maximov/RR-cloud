@@ -3,8 +3,15 @@ const fs = require('fs');
 const path = require('path');
 const ErrorHandler = require('../handlers/errorHandlers');
 const FileDto = require('../dtos/fileDto');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 class FileService {
+  getPath(file, uuid) {
+    const dirPath = path.dirname(__dirname);
+    return path.join(dirPath, '/files', `${uuid}`, `${file.path}`);
+  }
+
   createDirectoryForFile(file) {
     const dirPath = path.dirname(__dirname);
     const filePath = path.join(
@@ -113,11 +120,47 @@ class FileService {
     return savedFile;
   }
 
-  async downloadFile() {}
+  async downloadFile(user, id) {
+    const file = await File.findOne({ where: { id, userId: user.id } });
+    if (!file) {
+      throw ErrorHandler.badRequest('Файл не найден');
+    }
+    const path = this.getPath(file, user.uuid);
+    if (fs.existsSync(path)) {
+      return { path, name: file.name };
+    } else {
+      throw ErrorHandler.badRequest('Файл по данному пути не найден');
+    }
+  }
 
-  async searchFile() {}
+  async searchFile(user, searchQuery) {
+    let files = await File.findAll({ where: { userId: user.id } });
+    return files.filter((file) => file.name.includes(searchQuery));
+  }
 
-  async deleteFile() {}
+  async deleteFile(user, id) {
+    const file = await File.findOne({ where: { id, userId: user.id } });
+    if (!file) {
+      throw ErrorHandler.badRequest('Файл не найден');
+    }
+    const path = this.getPath(file, user.uuid);
+    if (file.type === 'dir') {
+      fs.rmdirSync(path, { recursive: true });
+    } else {
+      fs.unlinkSync(path);
+    }
+
+    //TO DO:
+    // const destroyFiles = File.findAll({
+    //   where: { userId: user.id, path: { [Op.like]: `%${file.path}` } },
+    // });
+    // const destroyIdsFile = destroyFiles.map((item) => item.id);
+    // await File.destroy({ where: { id: destroyIdsFile } });
+
+    await file.destroy();
+
+    return file;
+  }
 }
 
 module.exports = new FileService();

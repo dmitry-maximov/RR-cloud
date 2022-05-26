@@ -1,4 +1,3 @@
-const ErrorHandler = require('../handlers/errorHandlers');
 const FileService = require('../services/fileService');
 
 class FileController {
@@ -6,6 +5,7 @@ class FileController {
     try {
       const { name, type, parent } = req.body;
       const { user } = req;
+
       const file = await FileService.createDirectory(name, type, parent, user);
       return res.json(file);
     } catch (e) {
@@ -17,6 +17,7 @@ class FileController {
     try {
       const { parent } = req.query;
       const { user } = req;
+
       const files = await FileService.getFiles(user.id, parent);
       return res.json(files);
     } catch (e) {
@@ -29,6 +30,7 @@ class FileController {
       const file = req.files.file;
       const { user } = req;
       const { parent } = req.body;
+
       const files = await FileService.uploadFile(file, user, parent);
       return res.json(files);
     } catch (e) {
@@ -38,7 +40,11 @@ class FileController {
 
   async downloadFile(req, res, next) {
     try {
-      return res.json();
+      const { id } = req.query;
+      const { user } = req;
+
+      const { path, name } = FileService.downloadFile(user, id);
+      return res.download(path, name);
     } catch (e) {
       next(e);
     }
@@ -46,7 +52,11 @@ class FileController {
 
   async searchFile(req, res, next) {
     try {
-      return res.json();
+      const { search } = req.query;
+      const { user } = req;
+
+      const files = FileService.searchFile(user, search);
+      return res.json(files);
     } catch (e) {
       next(e);
     }
@@ -54,7 +64,10 @@ class FileController {
 
   async deleteFile(req, res, next) {
     try {
-      return res.json();
+      const { id } = req.query;
+      const { user } = req;
+      const files = await FileService.deleteFile(user, id);
+      return res.json(files);
     } catch (e) {
       next(e);
     }
