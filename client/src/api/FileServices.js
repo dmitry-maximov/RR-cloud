@@ -19,4 +19,10 @@ export default class FileService {
 
     return await $auth_api.post(`files/upload`, formData);
   }
+
+  static async downloadFile(fileId) {
+    return await $auth_api.get(`files/download?id=${fileId}`, {
+      responseType: 'blob',
+    });
+  }
 }

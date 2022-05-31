@@ -43,7 +43,7 @@ class FileController {
       const { id } = req.query;
       const { user } = req;
 
-      const { path, name } = FileService.downloadFile(user, id);
+      const { path, name } = await FileService.downloadFile(user, id);
       return res.download(path, name);
     } catch (e) {
       next(e);

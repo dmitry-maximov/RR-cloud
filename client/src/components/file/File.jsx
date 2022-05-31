@@ -9,6 +9,7 @@ import filePlateLogo from '../../img/file.png';
 import { formatDate, formatSize } from '../../utils/formatting';
 import { Box } from '@mui/system';
 import ContextMenu from '../contextmenu/ContextMenu';
+import { downloadFile } from '../../actions/file';
 
 const File = ({ file }) => {
   const dispatch = useDispatch();
@@ -31,7 +32,6 @@ const File = ({ file }) => {
     e.preventDefault();
     //TO DO :
     alert(`move to favorit file id=${file.id}`);
-
     setContextMenu(null);
   };
   const moveToTrashHandler = (e, file) => {
@@ -42,11 +42,19 @@ const File = ({ file }) => {
     setContextMenu(null);
   };
 
-  const downloadHandler = (e, file) => {
+  const downloadHandler = async (e, file) => {
     e.preventDefault();
-    //TO DO :
-    alert(`download file id=${file.id}`);
-
+    const response = await downloadFile(file.id);
+    if (response.status === 200) {
+      const blob = new Blob([response.data]);
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.download = file.name;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }
     setContextMenu(null);
   };
 

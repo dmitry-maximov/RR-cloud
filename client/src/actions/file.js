@@ -66,3 +66,12 @@ export const uploadFile = (file, dirId) => {
     }
   };
 };
+
+export const downloadFile = async (fileId) => {
+  try {
+    const response = await FileService.downloadFile(fileId);
+    return response;
+  } catch (e) {
+    alert(e.response.data.message);
+  }
+};
