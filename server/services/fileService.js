@@ -65,11 +65,11 @@ class FileService {
     return savedFile;
   }
 
-  async getFiles(userId, parent) {
-    let files = null;
-    if (parent) files = await File.findAll({ where: { userId, parent } });
-    else
-      files = await File.findAll({ where: { userId: userId, parent: null } });
+  async getFiles(userId, parent = null, sort = "asc") {
+    let files = await File.findAll({
+      where: { userId: userId, parent: parent },
+      order: [["name", sort]],
+    });
     return files;
   }
 

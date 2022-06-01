@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
 import FileList from '../file/FileList';
 import { getFiles, uploadFile } from '../../actions/file';
 import HeaderDisk from './HeaderDisk';
 import DiskUpload from './DiskUpload';
 import styled from '@emotion/styled';
-import Uploader from '../uploader/Uploader';
 
 const DropArea = styled('div')(({ theme }) => ({
   // color: theme.palette.primary.secondary,
@@ -23,12 +21,12 @@ const DropArea = styled('div')(({ theme }) => ({
 
 const Disk = () => {
   const dispatch = useDispatch();
-  const { currentDir } = useSelector((state) => state.files);
+  const { currentDir, sort } = useSelector((state) => state.files);
   const [dragEnter, setDragEnter] = useState(false);
 
   useEffect(() => {
-    dispatch(getFiles(currentDir));
-  }, [currentDir]);
+    dispatch(getFiles(currentDir, sort));
+  }, [currentDir, sort]);
 
   const fileUploadHandler = (e) => {
     const files = [...e.target.files];

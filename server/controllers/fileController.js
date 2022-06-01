@@ -15,10 +15,10 @@ class FileController {
 
   async getFiles(req, res, next) {
     try {
-      const { parent } = req.query;
+      const { parent, sort } = req.query;
       const { user } = req;
 
-      const files = await FileService.getFiles(user.id, parent);
+      const files = await FileService.getFiles(user.id, parent, sort);
       return res.json(files);
     } catch (e) {
       next(e);

@@ -5,12 +5,14 @@ const SET_LIST_VIEW = 'SET_LIST_VIEW';
 const SET_PLATE_VIEW = 'SET_PLATE_VIEW';
 const ADD_FILE = 'ADD_FILE';
 const DELETE_FILE = 'DELETE_FILE';
+const SET_SORT = 'SET_SORT';
 
 const defaultState = {
   files: [],
   currentDir: null,
   history: [],
   view: 'list',
+  sort: 'asc',
 };
 
 export default function fileReducer(state = defaultState, action) {
@@ -32,6 +34,8 @@ export default function fileReducer(state = defaultState, action) {
         ...state,
         files: [...state.files.filter((item) => item.id != action.payload)],
       };
+    case SET_SORT:
+      return { ...state, sort: action.payload };
     default:
       return state;
   }
@@ -47,3 +51,4 @@ export const setListView = () => ({ type: SET_LIST_VIEW });
 export const setPlateView = () => ({ type: SET_PLATE_VIEW });
 export const addFile = (file) => ({ type: ADD_FILE, payload: file });
 export const deleteFile = (fileId) => ({ type: DELETE_FILE, payload: fileId });
+export const setSort = (sorting) => ({ type: SET_SORT, payload: sorting });

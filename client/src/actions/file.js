@@ -7,10 +7,10 @@ import {
   showUploader,
 } from '../reducers/uploadReducer';
 
-export const getFiles = (dirId) => {
+export const getFiles = (dirId, sort) => {
   return async (dispatch) => {
     try {
-      const response = await FileService.getFiles(dirId);
+      const response = await FileService.getFiles(dirId, sort);
       dispatch(setFiles(response.data));
     } catch (e) {
       alert(e.response.data.message);

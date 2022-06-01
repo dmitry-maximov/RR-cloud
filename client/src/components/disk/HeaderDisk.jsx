@@ -4,6 +4,7 @@ import {
   setCurrentDir,
   setListView,
   setPlateView,
+  setSort,
 } from '../../reducers/fileReducer';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import ViewListIcon from '@mui/icons-material/ViewList';
@@ -12,7 +13,7 @@ import ViewModuleIcon from '@mui/icons-material/ViewModule';
 
 const HeaderDisk = () => {
   const dispatch = useDispatch();
-  const { history, view } = useSelector((state) => state.files);
+  const { history, view, sort } = useSelector((state) => state.files);
 
   const backClickHandler = () => {
     const backDirId = history.pop();
@@ -25,6 +26,14 @@ const HeaderDisk = () => {
 
   const setPlateViewClickHandler = () => {
     dispatch(setPlateView());
+  };
+
+  const setSortingClickHandler = () => {
+    if (sort === 'asc') {
+      dispatch(setSort('desc'));
+    } else {
+      dispatch(setSort('asc'));
+    }
   };
 
   return (
@@ -46,8 +55,17 @@ const HeaderDisk = () => {
         <KeyboardBackspaceIcon />
       </IconButton>
       <div>
-        <IconButton size="large" aria-haspopup="true" color="inherit">
-          <SortIcon />
+        <IconButton
+          size="large"
+          aria-haspopup="true"
+          color="inherit"
+          onClick={() => setSortingClickHandler()}
+        >
+          {sort === 'asc' ? (
+            <SortIcon sx={{ transform: 'scaleY(-1)' }} />
+          ) : (
+            <SortIcon />
+          )}
         </IconButton>
         <IconButton
           size="large"

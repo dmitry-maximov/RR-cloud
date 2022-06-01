@@ -1,8 +1,18 @@
 import { $auth_api } from './index';
 
 export default class FileService {
-  static async getFiles(dirId) {
-    return await $auth_api.get(`files${dirId ? '?parent=' + dirId : ''}`);
+  static async getFiles(dirId, sort) {
+    let url = `files`;
+    if (dirId) {
+      url = `files?parent=${dirId}`;
+    }
+    if (sort) {
+      url = `files?sort=${sort}`;
+    }
+    if (dirId && sort) {
+      url = `files?parent=${dirId}&sort=${sort}`;
+    }
+    return await $auth_api.get(url);
   }
 
   static async createDirectory(name, dirId) {
