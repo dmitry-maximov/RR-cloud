@@ -87,3 +87,14 @@ export const deleteFiles = (fileId) => {
     }
   };
 };
+
+export const serchFiles = (searchQuery) => {
+  return async (dispatch) => {
+    try {
+      const response = await FileService.searchFiles(searchQuery);
+      dispatch(setFiles(response.data));
+    } catch (e) {
+      alert(e.response.data.message);
+    }
+  };
+};

@@ -55,7 +55,7 @@ class FileController {
       const { search } = req.query;
       const { user } = req;
 
-      const files = FileService.searchFile(user, search);
+      const files = await FileService.searchFile(user, search);
       return res.json(files);
     } catch (e) {
       next(e);

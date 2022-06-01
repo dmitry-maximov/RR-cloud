@@ -134,8 +134,10 @@ class FileService {
   }
 
   async searchFile(user, searchQuery) {
-    let files = await File.findAll({ where: { userId: user.id } });
-    return files.filter((file) => file.name.includes(searchQuery));
+    const files = await File.findAll({ where: { userId: user.id } });
+    return searchQuery
+      ? files.filter((file) => file.name.includes(searchQuery))
+      : files;
   }
 
   async deleteFile(user, id) {

@@ -38,4 +38,8 @@ export default class FileService {
   static async deleteFiles(fileId) {
     return await $auth_api.delete(`files?id=${fileId}`);
   }
+
+  static async searchFiles(searchQuery) {
+    return await $auth_api.get(`files/search?search=${searchQuery}`);
+  }
 }
