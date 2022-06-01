@@ -1,10 +1,11 @@
-const { User } = require('../models/index');
-const bcrypt = require('bcrypt');
-const ErrorHandler = require('../handlers/errorHandlers');
-const mailService = require('./mailService');
-const tokenService = require('./tokenService');
-const UserDto = require('../dtos/userDto');
-const uuid = require('uuid');
+const { User } = require("../models/index");
+const bcrypt = require("bcrypt");
+const ErrorHandler = require("../handlers/errorHandlers");
+const mailService = require("./mailService");
+const tokenService = require("./tokenService");
+const UserDto = require("../dtos/userDto");
+const uuid = require("uuid");
+const fileService = require("./fileService");
 
 class UserService {
   async registration(email, password, name, family, login) {
@@ -32,9 +33,15 @@ class UserService {
     //   email,
     //   `${process.env.API_URL}/api/auth/activate/${activationLink}`
     // );
+
     const tokens = tokenService.generateTokens({ ...userDto });
     await tokenService.saveToken(userDto.id, tokens.refreshToken);
-
+    //создаем свой каталог для каждого пользователя по activationLink т к id int
+    await fileService.createDirectoryForFile({
+      userId: user.id,
+      uuid: user.activationLink,
+      path: "",
+    });
     return { ...tokens, user: userDto };
   }
 
@@ -45,7 +52,7 @@ class UserService {
     }
     const isPassEquals = await bcrypt.compare(password, user.password);
     if (!isPassEquals) {
-      throw ErrorHandler.badRequest('Неверный пароль');
+      throw ErrorHandler.badRequest("Неверный пароль");
     }
 
     const userDto = new UserDto(user);
@@ -63,7 +70,7 @@ class UserService {
   async activate(activationLink) {
     const user = await User.findOne({ where: { activationLink } });
     if (!user) {
-      throw ErrorHandler.badRequest('Неккоректная ссылка активации');
+      throw ErrorHandler.badRequest("Неккоректная ссылка активации");
     }
     user.isActivated = true;
     await User.save();

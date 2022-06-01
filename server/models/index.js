@@ -17,10 +17,24 @@ const Token = sequelize.define('token', {
   refreshToken: { type: DataTypes.TEXT, allowNull: false },
 });
 
+const File = sequelize.define('file', {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  name: { type: DataTypes.STRING, allowNull: false },
+  type: { type: DataTypes.STRING, allowNull: false },
+  size: { type: DataTypes.INTEGER, default: 0 },
+  path: { type: DataTypes.TEXT, allowNull: false },
+  parent: { type: DataTypes.INTEGER },
+  child: { type: DataTypes.INTEGER },
+});
+
 User.hasOne(Token);
 Token.belongsTo(User);
+
+User.hasMany(File);
+File.belongsTo(User);
 
 module.exports = {
   User,
   Token,
+  File,
 };

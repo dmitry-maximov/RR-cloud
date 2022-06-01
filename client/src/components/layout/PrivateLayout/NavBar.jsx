@@ -10,15 +10,13 @@ import {
   Avatar,
   Divider,
   ListItemIcon,
-  TextField,
   IconButton,
-  Collapse,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import SearchIcon from '@mui/icons-material/Search';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import SearchPanel from './SearchPanel';
 
 const TitleBox = styled('div')(({ theme }) => ({
   color: theme.palette.secondary,
@@ -39,7 +37,6 @@ const StyledBox = styled(Box)(({ theme }) => ({
 const NavBar = () => {
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
-  const [showSearch, setShowSearch] = useState(false);
   const { isAuth, currentUser } = useSelector((state) => state.user);
 
   const handleMenu = (event) => {
@@ -65,29 +62,7 @@ const NavBar = () => {
         </TitleBox>
 
         <Stack direction="row" spacing={1}>
-          <Collapse orientation="horizontal" in={showSearch}>
-            <Box>
-              <TextField
-                fullWidth
-                id="search"
-                name="serch"
-                variant="standard"
-                placeholder="Поиск по файлам"
-                sx={{
-                  width: '25vw',
-                }}
-              />
-            </Box>
-          </Collapse>
-
-          <IconButton
-            size="large"
-            aria-haspopup="true"
-            color="inherit"
-            onClick={() => setShowSearch((prev) => !prev)}
-          >
-            <SearchIcon />
-          </IconButton>
+          <SearchPanel />
 
           <IconButton size="large" aria-haspopup="true" color="inherit">
             <NotificationsIcon />
@@ -137,9 +112,6 @@ const NavBar = () => {
               >
                 <MenuItem>
                   <Avatar /> Профиль
-                </MenuItem>
-                <MenuItem>
-                  <Avatar /> Мой аккаунт
                 </MenuItem>
                 <Divider />
                 <MenuItem>

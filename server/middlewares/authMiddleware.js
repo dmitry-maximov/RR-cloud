@@ -19,7 +19,7 @@ module.exports = function (req, res, next) {
     if (!user) {
       return next(ErrorHandler.unauthorizedError());
     }
-
+    req.user = user;
     next();
   } catch (e) {
     return next(ErrorHandler.unauthorizedError());
