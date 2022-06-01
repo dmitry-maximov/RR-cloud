@@ -1,22 +1,22 @@
-const { File } = require('../models/index');
-const fs = require('fs');
-const path = require('path');
-const ErrorHandler = require('../handlers/errorHandlers');
-const FileDto = require('../dtos/fileDto');
-const Sequelize = require('sequelize');
+const { File } = require("../models/index");
+const fs = require("fs");
+const path = require("path");
+const ErrorHandler = require("../handlers/errorHandlers");
+const FileDto = require("../dtos/fileDto");
+const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 
 class FileService {
   getPath(file, uuid) {
     const dirPath = path.dirname(__dirname);
-    return path.join(dirPath, '/files', `${uuid}`, `${file.path}`);
+    return path.join(dirPath, "/files", `${uuid}`, `${file.path}`);
   }
 
   createDirectoryForFile(file) {
     const dirPath = path.dirname(__dirname);
     const filePath = path.join(
       dirPath,
-      '/files',
+      "/files",
       `${file.uuid}`,
       `${file.path}`
     );
@@ -25,13 +25,13 @@ class FileService {
       try {
         if (!fs.existsSync(filePath)) {
           fs.mkdirSync(filePath);
-          return resolve({ message: 'Файл успешно создан' });
+          return resolve({ message: "Файл успешно создан" });
         } else {
-          return reject(ErrorHandler.internalServer('Файл уже существует'));
+          return reject(ErrorHandler.internalServer("Файл уже существует"));
         }
       } catch (e) {
         throw ErrorHandler.internalServer(
-          'Ошибка при создании каталога на сервере'
+          "Ошибка при создании каталога на сервере"
         );
       }
     });
@@ -86,25 +86,25 @@ class FileService {
     if (parentFile) {
       filePath = path.join(
         dirPath,
-        '/files',
+        "/files",
         `${user.uuid}`,
         `${parentFile.path}`,
         `${file.name}`
       );
     } else {
-      filePath = path.join(dirPath, '/files', `${user.uuid}`, `${file.name}`);
+      filePath = path.join(dirPath, "/files", `${user.uuid}`, `${file.name}`);
     }
 
     if (fs.existsSync(filePath)) {
-      throw ErrorHandler.badRequest('Файл уже существует');
+      throw ErrorHandler.badRequest("Файл уже существует");
     }
 
     file.mv(filePath);
 
-    const type = file.name.split('.').pop();
+    const type = file.name.split(".").pop();
     let fpath = file.name;
     if (parent) {
-      fpath = parentFile.path + '\\' + file.name;
+      fpath = parentFile.path + "\\" + file.name;
     }
 
     const savedFileDto = new FileDto({
@@ -123,13 +123,13 @@ class FileService {
   async downloadFile(user, id) {
     const file = await File.findOne({ where: { id, userId: user.id } });
     if (!file) {
-      throw ErrorHandler.badRequest('Файл не найден');
+      throw ErrorHandler.badRequest("Файл не найден");
     }
     const path = this.getPath(file, user.uuid);
     if (fs.existsSync(path)) {
       return { path, name: file.name };
     } else {
-      throw ErrorHandler.badRequest('Файл по данному пути не найден');
+      throw ErrorHandler.badRequest("Файл по данному пути не найден");
     }
   }
 
@@ -141,24 +141,27 @@ class FileService {
   async deleteFile(user, id) {
     const file = await File.findOne({ where: { id, userId: user.id } });
     if (!file) {
-      throw ErrorHandler.badRequest('Файл не найден');
+      throw ErrorHandler.badRequest("Файл не найден");
     }
-    const path = this.getPath(file, user.uuid);
-    if (file.type === 'dir') {
-      fs.rmdirSync(path, { recursive: true });
+    if (file.type === "dir") {
+      const destroyFiles = await File.findAll({
+        where: { userId: user.id, path: { [Op.like]: `${file.path}%` } },
+      });
+
+      const destroyIdsFile = destroyFiles.map((item) => item.id);
+      const destroyPathsFile = destroyFiles.map((item) =>
+        this.getPath(item, user.uuid)
+      );
+
+      await File.destroy({ where: { id: destroyIdsFile } });
+      destroyPathsFile.forEach((path) =>
+        fs.rmdirSync(path, { recursive: true })
+      );
     } else {
+      const path = this.getPath(file, user.uuid);
       fs.unlinkSync(path);
+      await file.destroy();
     }
-
-    //TO DO:
-    // const destroyFiles = File.findAll({
-    //   where: { userId: user.id, path: { [Op.like]: `%${file.path}` } },
-    // });
-    // const destroyIdsFile = destroyFiles.map((item) => item.id);
-    // await File.destroy({ where: { id: destroyIdsFile } });
-
-    await file.destroy();
-
     return file;
   }
 }

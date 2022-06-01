@@ -9,7 +9,7 @@ import filePlateLogo from '../../img/file.png';
 import { formatDate, formatSize } from '../../utils/formatting';
 import { Box } from '@mui/system';
 import ContextMenu from '../contextmenu/ContextMenu';
-import { downloadFile } from '../../actions/file';
+import { deleteFiles, downloadFile } from '../../actions/file';
 
 const File = ({ file }) => {
   const dispatch = useDispatch();
@@ -36,9 +36,7 @@ const File = ({ file }) => {
   };
   const moveToTrashHandler = (e, file) => {
     e.preventDefault();
-    //TO DO :
-    alert(`move to trash file id=${file.id}`);
-
+    dispatch(deleteFiles(file.id));
     setContextMenu(null);
   };
 

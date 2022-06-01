@@ -1,4 +1,4 @@
-const FileService = require('../services/fileService');
+const FileService = require("../services/fileService");
 
 class FileController {
   async createDirectory(req, res, next) {
@@ -66,6 +66,7 @@ class FileController {
     try {
       const { id } = req.query;
       const { user } = req;
+
       const files = await FileService.deleteFile(user, id);
       return res.json(files);
     } catch (e) {

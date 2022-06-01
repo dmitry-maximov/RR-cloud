@@ -1,4 +1,4 @@
-import { addFile, setFiles } from '../reducers/fileReducer';
+import { addFile, deleteFile, setFiles } from '../reducers/fileReducer';
 import FileService from '../api/FileServices';
 import { $auth_api } from '../api';
 import {
@@ -74,4 +74,16 @@ export const downloadFile = async (fileId) => {
   } catch (e) {
     alert(e.response.data.message);
   }
+};
+
+export const deleteFiles = (fileId) => {
+  return async (dispatch) => {
+    try {
+      const response = await FileService.deleteFiles(fileId);
+      dispatch(deleteFile(fileId));
+      debugger;
+    } catch (e) {
+      alert(e.response.data.message);
+    }
+  };
 };

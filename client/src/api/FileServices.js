@@ -25,4 +25,7 @@ export default class FileService {
       responseType: 'blob',
     });
   }
+  static async deleteFiles(fileId) {
+    return await $auth_api.delete(`files?id=${fileId}`);
+  }
 }
