@@ -166,6 +166,23 @@ class FileService {
     }
     return file;
   }
+
+  async favoritFile(user, sort) {
+    return await File.findAll({
+      where: { userId: user.id, isFavorit: true },
+      order: [["name", sort]],
+    });
+  }
+
+  async setFavoritFile(user, id, state = true) {
+    const file = await File.findOne({ where: { id, userId: user.id } });
+    if (!file) {
+      throw ErrorHandler.badRequest("Файл не найден");
+    }
+    file.isFavorit = state;
+    await file.save();
+    return file;
+  }
 }
 
 module.exports = new FileService();

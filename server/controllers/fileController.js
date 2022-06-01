@@ -73,6 +73,29 @@ class FileController {
       next(e);
     }
   }
+  async favoritFile(req, res, next) {
+    try {
+      const { sort } = req.query;
+      const { user } = req;
+
+      const files = await FileService.favoritFile(user, sort);
+      return res.json(files);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async setFavoritFile(req, res, next) {
+    try {
+      const { id, state } = req.body;
+      const { user } = req;
+
+      const file = await FileService.setFavoritFile(user, id, state);
+      return res.json(file);
+    } catch (e) {
+      next(e);
+    }
+  }
 }
 
 module.exports = new FileController();

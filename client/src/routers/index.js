@@ -10,7 +10,9 @@ import {
   CLOUD_SPAСE_PAGE,
   REGISTRATION_PAGE,
   ABOUT_PAGE,
+  FAVORIT_PAGE,
 } from '../utils/const';
+import FavoritPage from '../pages/FavoritPage';
 
 export const publicRoutes = [
   {
@@ -31,6 +33,10 @@ export const privateRoutes = [
   {
     path: CLOUD_SPAСE_PAGE,
     element: <Space />,
+  },
+  {
+    path: FAVORIT_PAGE,
+    element: <FavoritPage />,
   },
 ];
 

@@ -16,11 +16,18 @@ import StarHalfIcon from '@mui/icons-material/StarHalf';
 import SettingsIcon from '@mui/icons-material/Settings';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Link } from 'react-router-dom';
-import { START_PAGE } from '../../../utils/const';
+import {
+  FAVORIT_PAGE,
+  START_PAGE,
+  CLOUD_SPAСE_PAGE,
+} from '../../../utils/const';
 import AddedModal from './AddedModal';
 import Uploader from '../../uploader/Uploader';
+import { useNavigate } from 'react-router-dom';
 
 const SideBar = () => {
+  let navigate = useNavigate();
+
   const StyledBox = styled(Box)(({ theme }) => ({
     color: theme.palette.text.primary,
     padding: '2rem',
@@ -74,13 +81,13 @@ const SideBar = () => {
           <AddedModal />
           <Item>
             <List>
-              <ListItem button>
+              <ListItem button onClick={() => navigate(CLOUD_SPAСE_PAGE)}>
                 <ListItemIcon>
                   <FilterDramaIcon />
                 </ListItemIcon>
                 <ListItemText primary="Мое облако" />
               </ListItem>
-              <ListItem button>
+              <ListItem button onClick={() => navigate(FAVORIT_PAGE)}>
                 <ListItemIcon>
                   <StarHalfIcon />
                 </ListItemIcon>

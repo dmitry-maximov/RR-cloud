@@ -10,6 +10,7 @@ const ContextMenu = ({
   handleAddFavorit,
   handleMoveToTrash,
   handleDownload,
+  handleDeleteFavorit,
 }) => {
   const file = contextMenu?.file;
   return (
@@ -27,12 +28,21 @@ const ContextMenu = ({
         <ListItemIcon></ListItemIcon>
         Открыть
       </MenuItem>
-      <MenuItem onClick={(e) => handleAddFavorit(e, file)}>
-        <ListItemIcon>
-          <StarHalfIcon fontSize="small" />
-        </ListItemIcon>
-        Добавить в избранное
-      </MenuItem>
+      {file && file.isFavorit ? (
+        <MenuItem onClick={(e) => handleDeleteFavorit(e, file)}>
+          <ListItemIcon>
+            <StarHalfIcon fontSize="small" />
+          </ListItemIcon>
+          Убрать из избранного
+        </MenuItem>
+      ) : (
+        <MenuItem onClick={(e) => handleAddFavorit(e, file)}>
+          <ListItemIcon>
+            <StarHalfIcon fontSize="small" />
+          </ListItemIcon>
+          Добавить в избранное
+        </MenuItem>
+      )}
       <MenuItem onClick={(e) => handleMoveToTrash(e, file)}>
         <ListItemIcon>
           <DeleteIcon fontSize="small" />

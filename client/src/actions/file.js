@@ -81,7 +81,6 @@ export const deleteFiles = (fileId) => {
     try {
       const response = await FileService.deleteFiles(fileId);
       dispatch(deleteFile(fileId));
-      debugger;
     } catch (e) {
       alert(e.response.data.message);
     }
@@ -97,4 +96,33 @@ export const serchFiles = (searchQuery) => {
       alert(e.response.data.message);
     }
   };
+};
+
+export const getFavoritFiles = (sort) => {
+  return async (dispatch) => {
+    try {
+      const response = await FileService.favoritFiles(sort);
+      dispatch(setFiles(response.data));
+    } catch (e) {
+      alert(e.response.data.message);
+    }
+  };
+};
+
+export const setFavoritFile = async (fileId) => {
+  try {
+    const response = await FileService.setFavoritFile(fileId);
+    return response;
+  } catch (e) {
+    alert(e.response.data.message);
+  }
+};
+
+export const deleteFavoritFile = async (fileId) => {
+  try {
+    const response = await FileService.setFavoritFile(fileId, false);
+    return response;
+  } catch (e) {
+    alert(e.response.data.message);
+  }
 };

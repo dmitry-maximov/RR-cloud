@@ -9,7 +9,14 @@ import filePlateLogo from '../../img/file.png';
 import { formatDate, formatSize } from '../../utils/formatting';
 import { Box } from '@mui/system';
 import ContextMenu from '../contextmenu/ContextMenu';
-import { deleteFiles, downloadFile } from '../../actions/file';
+import {
+  deleteFiles,
+  downloadFile,
+  setFavoritFile,
+  getFiles,
+  deleteFavoritFile,
+} from '../../actions/file';
+import StarRateIcon from '@mui/icons-material/StarRate';
 
 const File = ({ file }) => {
   const dispatch = useDispatch();
@@ -28,12 +35,20 @@ const File = ({ file }) => {
     } else return;
   };
 
-  const addedАavoritesHandler = (e, file) => {
+  const addedFavoritesHandler = (e, file) => {
     e.preventDefault();
-    //TO DO :
-    alert(`move to favorit file id=${file.id}`);
+    setFavoritFile(file.id);
+    dispatch(getFiles(currentDir));
     setContextMenu(null);
   };
+
+  const deleteFavoritesHandler = (e, file) => {
+    e.preventDefault();
+    deleteFavoritFile(file.id);
+    dispatch(getFiles(currentDir));
+    setContextMenu(null);
+  };
+
   const moveToTrashHandler = (e, file) => {
     e.preventDefault();
     dispatch(deleteFiles(file.id));
@@ -80,9 +95,10 @@ const File = ({ file }) => {
         contextMenu={contextMenu}
         handleClose={closeContextMenuHandler}
         handleOpenFolder={openDirectoryHandler}
-        handleAddFavorit={addedАavoritesHandler}
+        handleAddFavorit={addedFavoritesHandler}
         handleMoveToTrash={moveToTrashHandler}
         handleDownload={downloadHandler}
+        handleDeleteFavorit={deleteFavoritesHandler}
       />
       {view === 'list' ? (
         <TableRow
@@ -114,6 +130,9 @@ const File = ({ file }) => {
           </TableCell>
           <TableCell align="center">
             {file.size && formatSize(file.size)}
+          </TableCell>
+          <TableCell align="center">
+            {file.isFavorit && <StarRateIcon color="primary" />}
           </TableCell>
         </TableRow>
       ) : (
