@@ -9,18 +9,17 @@ const Op = Sequelize.Op;
 class FileService {
   getPath(file, uuid) {
     const dirPath = path.dirname(__dirname);
-    return path.join(dirPath, "/files", `${uuid}`, `${file.path}`);
+    return path.join(
+      dirPath,
+      "/files",
+      `${uuid}`,
+      `${file.path.replace(`\\`, `/`)}`
+    );
   }
 
   createDirectoryForFile(file) {
-    const dirPath = path.dirname(__dirname);
-    const filePath = path.join(
-      dirPath,
-      "/files",
-      `${file.uuid}`,
-      `${file.path}`
-    );
-    //const filePath = `${process.env.FILE_PATH}\\${file.userUuid}\\${file.path}`;
+    const filePath = this.getPath(file, file.uuid);
+
     return new Promise((resolve, reject) => {
       try {
         if (!fs.existsSync(filePath)) {
@@ -148,17 +147,23 @@ class FileService {
     if (file.type === "dir") {
       const destroyFiles = await File.findAll({
         where: { userId: user.id, path: { [Op.like]: `${file.path}%` } },
+        order: [["id", "desc"]],
       });
 
       const destroyIdsFile = destroyFiles.map((item) => item.id);
-      const destroyPathsFile = destroyFiles.map((item) =>
-        this.getPath(item, user.uuid)
-      );
+      const destroyPathsFile = destroyFiles.map((item) => ({
+        path: this.getPath(item, user.uuid),
+        type: item.type,
+      }));
 
       await File.destroy({ where: { id: destroyIdsFile } });
-      destroyPathsFile.forEach((path) =>
-        fs.rmdirSync(path, { recursive: true })
-      );
+      destroyPathsFile.forEach((item) => {
+        if (item.type === "dir") {
+          fs.rmdirSync(item.path, { recursive: true });
+        } else {
+          fs.unlinkSync(item.path);
+        }
+      });
     } else {
       const path = this.getPath(file, user.uuid);
       fs.unlinkSync(path);
