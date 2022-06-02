@@ -179,8 +179,20 @@ class FileService {
     if (!file) {
       throw ErrorHandler.badRequest("Файл не найден");
     }
-    file.isFavorit = state;
-    await file.save();
+    if (file.type === "dir") {
+      const destroyFiles = await File.findAll({
+        where: { userId: user.id, path: { [Op.like]: `${file.path}%` } },
+      });
+      const destroyIdsFile = destroyFiles.map((item) => item.id);
+      await File.update(
+        { isFavorit: state },
+        { where: { id: destroyIdsFile } }
+      );
+    } else {
+      file.isFavorit = state;
+      await file.save();
+    }
+
     return file;
   }
 }

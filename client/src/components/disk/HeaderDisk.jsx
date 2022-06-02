@@ -45,15 +45,19 @@ const HeaderDisk = ({ caption }) => {
         padding: '.25rem',
       }}
     >
-      <IconButton
-        variant="contained"
-        size="large"
-        aria-haspopup="true"
-        color={history.length > 0 ? 'primary' : 'inherit'}
-        onClick={() => backClickHandler()}
-      >
-        <KeyboardBackspaceIcon />
-      </IconButton>
+      {history.length > 0 ? (
+        <IconButton
+          variant="contained"
+          size="large"
+          aria-haspopup="true"
+          color={history.length > 0 ? 'primary' : 'inherit'}
+          onClick={() => backClickHandler()}
+        >
+          <KeyboardBackspaceIcon />
+        </IconButton>
+      ) : (
+        <div> </div>
+      )}
       {caption && (
         <Typography variant="h4" sx={{ color: '#566885' }}>
           {caption}

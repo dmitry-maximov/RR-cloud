@@ -2,6 +2,8 @@ import { ListItemIcon, Menu, MenuItem } from '@mui/material';
 import StarHalfIcon from '@mui/icons-material/StarHalf';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadIcon from '@mui/icons-material/Download';
+import { useLocation } from 'react-router-dom';
+import { CLOUD_SPAСE_PAGE } from '../../utils/const';
 
 const ContextMenu = ({
   contextMenu,
@@ -12,6 +14,8 @@ const ContextMenu = ({
   handleDownload,
   handleDeleteFavorit,
 }) => {
+  const location = useLocation();
+  const isSpace = location.pathname === CLOUD_SPAСE_PAGE;
   const file = contextMenu?.file;
   return (
     <Menu
@@ -24,10 +28,12 @@ const ContextMenu = ({
           : undefined
       }
     >
-      <MenuItem onClick={(e) => handleOpenFolder(e, file)}>
-        <ListItemIcon></ListItemIcon>
-        Открыть
-      </MenuItem>
+      {isSpace && (
+        <MenuItem onClick={(e) => handleOpenFolder(e, file)}>
+          <ListItemIcon></ListItemIcon>
+          Открыть
+        </MenuItem>
+      )}
       {file && file.isFavorit ? (
         <MenuItem onClick={(e) => handleDeleteFavorit(e, file)}>
           <ListItemIcon>

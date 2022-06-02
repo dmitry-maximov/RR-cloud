@@ -14,10 +14,11 @@ const ListViewFiles = ({ files }) => {
       <TableHead>
         <TableRow>
           <TableCell> </TableCell>
-          <TableCell align="center">Наименование</TableCell>
+          <TableCell align="left">Наименование</TableCell>
           <TableCell align="center">Дата</TableCell>
           <TableCell align="center">Тип</TableCell>
           <TableCell align="center">Размер</TableCell>
+          <TableCell></TableCell>
         </TableRow>
       </TableHead>
       <TableBody>

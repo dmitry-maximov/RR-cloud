@@ -17,34 +17,42 @@ import {
   deleteFavoritFile,
 } from '../../actions/file';
 import StarRateIcon from '@mui/icons-material/StarRate';
+import { useLocation } from 'react-router-dom';
+import { CLOUD_SPAСE_PAGE } from '../../utils/const';
 
 const File = ({ file }) => {
   const dispatch = useDispatch();
   const { currentDir, view } = useSelector((state) => state.files);
   const [contextMenu, setContextMenu] = useState(null);
+  const location = useLocation();
+  const isSpace = location.pathname === CLOUD_SPAСE_PAGE;
 
   const openDirectoryHandler = (e, file) => {
     e.preventDefault();
+    if (!isSpace) return;
+
     if (e.ctrlKey) {
       //TO DO : select file
       return;
     }
+
     if (file.type === 'dir') {
       dispatch(setCurrentDir(file.id));
       dispatch(pushToHistory(currentDir));
     } else return;
   };
 
-  const addedFavoritesHandler = (e, file) => {
+  const addedFavoritesHandler = async (e, file) => {
     e.preventDefault();
-    setFavoritFile(file.id);
+    await setFavoritFile(file.id);
+
     dispatch(getFiles(currentDir));
     setContextMenu(null);
   };
 
-  const deleteFavoritesHandler = (e, file) => {
+  const deleteFavoritesHandler = async (e, file) => {
     e.preventDefault();
-    deleteFavoritFile(file.id);
+    await deleteFavoritFile(file.id);
     dispatch(getFiles(currentDir));
     setContextMenu(null);
   };
@@ -114,24 +122,24 @@ const File = ({ file }) => {
           onClick={(e) => openDirectoryHandler(e, file)}
           onContextMenu={(e) => openContextMenuHandler(e, file)}
         >
-          <TableCell component="th" scope="row">
+          <TableCell component="th" scope="row" sx={{ width: '10%' }}>
             <div style={{ margin: '.25rem 0 0 0' }}>
               <img src={file.type === 'dir' ? folderLogo : fileLogo} />
             </div>
           </TableCell>
-          <TableCell align="left">
+          <TableCell align="left" sx={{ width: '45%' }}>
             <p>{file.name}</p>
           </TableCell>
-          <TableCell align="center">
+          <TableCell align="center" sx={{ width: '10%' }}>
             <p> {formatDate(file.updatedAt)}</p>
           </TableCell>
-          <TableCell align="center">
+          <TableCell align="center" sx={{ width: '15%' }}>
             {file.type === 'dir' ? '' : `Файл "${file.type}"`}
           </TableCell>
-          <TableCell align="center">
+          <TableCell align="center" sx={{ width: '10%' }}>
             {file.size && formatSize(file.size)}
           </TableCell>
-          <TableCell align="center">
+          <TableCell align="center" sx={{ width: '10%' }}>
             {file.isFavorit && <StarRateIcon color="primary" />}
           </TableCell>
         </TableRow>
