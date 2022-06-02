@@ -42,4 +42,12 @@ export default class FileService {
   static async searchFiles(searchQuery) {
     return await $auth_api.get(`files/search?search=${searchQuery}`);
   }
+
+  static async favoritFiles(sort) {
+    return await $auth_api.get(`files/favorit?sort=${sort}`);
+  }
+
+  static async setFavoritFile(fileId, state = true) {
+    return await $auth_api.post(`files/favorit`, { id: fileId, state });
+  }
 }

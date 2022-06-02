@@ -8,15 +8,17 @@ import {
 import File from './File';
 
 const ListViewFiles = ({ files }) => {
+  debugger;
   return (
     <Table sx={{ minWidth: 650 }} aria-label="simple table">
       <TableHead>
         <TableRow>
           <TableCell> </TableCell>
-          <TableCell align="center">Наименование</TableCell>
+          <TableCell align="left">Наименование</TableCell>
           <TableCell align="center">Дата</TableCell>
           <TableCell align="center">Тип</TableCell>
           <TableCell align="center">Размер</TableCell>
+          <TableCell></TableCell>
         </TableRow>
       </TableHead>
       <TableBody>

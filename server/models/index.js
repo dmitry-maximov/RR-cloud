@@ -1,7 +1,7 @@
-const sequelize = require('../db');
-const { DataTypes } = require('sequelize');
+const sequelize = require("../db");
+const { DataTypes } = require("sequelize");
 
-const User = sequelize.define('user', {
+const User = sequelize.define("user", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   email: { type: DataTypes.STRING, unique: true, allowNull: false },
   password: { type: DataTypes.STRING, allowNull: false },
@@ -12,12 +12,12 @@ const User = sequelize.define('user', {
   activationLink: { type: DataTypes.STRING },
 });
 
-const Token = sequelize.define('token', {
+const Token = sequelize.define("token", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   refreshToken: { type: DataTypes.TEXT, allowNull: false },
 });
 
-const File = sequelize.define('file', {
+const File = sequelize.define("file", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   name: { type: DataTypes.STRING, allowNull: false },
   type: { type: DataTypes.STRING, allowNull: false },
@@ -25,6 +25,7 @@ const File = sequelize.define('file', {
   path: { type: DataTypes.TEXT, allowNull: false },
   parent: { type: DataTypes.INTEGER },
   child: { type: DataTypes.INTEGER },
+  isFavorit: { type: DataTypes.BOOLEAN, defaultValue: false },
 });
 
 User.hasOne(Token);

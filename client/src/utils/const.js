@@ -5,3 +5,4 @@ export const REGISTRATION_PAGE = '/registration';
 export const NOT_FOUND_PAGE = '/notfound';
 export const CLOUD_SPAСE_PAGE = '/space';
 export const ABOUT_PAGE = '/about';
+export const FAVORIT_PAGE = '/favorit';

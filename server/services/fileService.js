@@ -166,6 +166,35 @@ class FileService {
     }
     return file;
   }
+
+  async favoritFile(user, sort) {
+    return await File.findAll({
+      where: { userId: user.id, isFavorit: true },
+      order: [["name", sort]],
+    });
+  }
+
+  async setFavoritFile(user, id, state = true) {
+    const file = await File.findOne({ where: { id, userId: user.id } });
+    if (!file) {
+      throw ErrorHandler.badRequest("Файл не найден");
+    }
+    if (file.type === "dir") {
+      const destroyFiles = await File.findAll({
+        where: { userId: user.id, path: { [Op.like]: `${file.path}%` } },
+      });
+      const destroyIdsFile = destroyFiles.map((item) => item.id);
+      await File.update(
+        { isFavorit: state },
+        { where: { id: destroyIdsFile } }
+      );
+    } else {
+      file.isFavorit = state;
+      await file.save();
+    }
+
+    return file;
+  }
 }
 
 module.exports = new FileService();

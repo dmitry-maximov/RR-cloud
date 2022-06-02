@@ -1,4 +1,4 @@
-import { Stack, IconButton } from '@mui/material';
+import { Stack, IconButton, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   setCurrentDir,
@@ -11,7 +11,7 @@ import ViewListIcon from '@mui/icons-material/ViewList';
 import SortIcon from '@mui/icons-material/Sort';
 import ViewModuleIcon from '@mui/icons-material/ViewModule';
 
-const HeaderDisk = () => {
+const HeaderDisk = ({ caption }) => {
   const dispatch = useDispatch();
   const { history, view, sort } = useSelector((state) => state.files);
 
@@ -45,15 +45,24 @@ const HeaderDisk = () => {
         padding: '.25rem',
       }}
     >
-      <IconButton
-        variant="contained"
-        size="large"
-        aria-haspopup="true"
-        color={history.length > 0 ? 'primary' : 'inherit'}
-        onClick={() => backClickHandler()}
-      >
-        <KeyboardBackspaceIcon />
-      </IconButton>
+      {history.length > 0 ? (
+        <IconButton
+          variant="contained"
+          size="large"
+          aria-haspopup="true"
+          color={history.length > 0 ? 'primary' : 'inherit'}
+          onClick={() => backClickHandler()}
+        >
+          <KeyboardBackspaceIcon />
+        </IconButton>
+      ) : (
+        <div> </div>
+      )}
+      {caption && (
+        <Typography variant="h4" sx={{ color: '#566885' }}>
+          {caption}
+        </Typography>
+      )}
       <div>
         <IconButton
           size="large"
