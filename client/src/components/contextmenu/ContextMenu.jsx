@@ -2,8 +2,9 @@ import { ListItemIcon, Menu, MenuItem } from '@mui/material';
 import StarHalfIcon from '@mui/icons-material/StarHalf';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadIcon from '@mui/icons-material/Download';
+import RestoreFromTrashIcon from '@mui/icons-material/RestoreFromTrash';
 import { useLocation } from 'react-router-dom';
-import { CLOUD_SPAСE_PAGE } from '../../utils/const';
+import { BASKET_PAGE, CLOUD_SPAСE_PAGE } from '../../utils/const';
 
 const ContextMenu = ({
   contextMenu,
@@ -13,9 +14,12 @@ const ContextMenu = ({
   handleMoveToTrash,
   handleDownload,
   handleDeleteFavorit,
+  handleRestoreFromTrash,
+  handleRemove,
 }) => {
   const location = useLocation();
   const isSpace = location.pathname === CLOUD_SPAСE_PAGE;
+  const isTrash = location.pathname === BASKET_PAGE;
   const file = contextMenu?.file;
   return (
     <Menu
@@ -49,12 +53,25 @@ const ContextMenu = ({
           Добавить в избранное
         </MenuItem>
       )}
-      <MenuItem onClick={(e) => handleMoveToTrash(e, file)}>
+      {file && file.isTrash && (
+        <MenuItem onClick={(e) => handleRestoreFromTrash(e, file)}>
+          <ListItemIcon>
+            <RestoreFromTrashIcon fontSize="small" />
+          </ListItemIcon>
+          Восстановить
+        </MenuItem>
+      )}
+      <MenuItem
+        onClick={(e) =>
+          isTrash ? handleRemove(e, file) : handleMoveToTrash(e, file)
+        }
+      >
         <ListItemIcon>
           <DeleteIcon fontSize="small" />
         </ListItemIcon>
         Удалить
       </MenuItem>
+
       {file && file.type !== 'dir' && (
         <MenuItem onClick={(e) => handleDownload(e, file)}>
           <ListItemIcon>

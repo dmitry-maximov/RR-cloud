@@ -67,7 +67,7 @@ class FileService {
 
   async getFiles(userId, parent = null, sort = "asc") {
     let files = await File.findAll({
-      where: { userId: userId, parent: parent },
+      where: { userId: userId, parent: parent, isTrash: false },
       order: [["name", sort]],
     });
     return files;
@@ -203,6 +203,42 @@ class FileService {
     }
 
     return file;
+  }
+
+  async basketFiles(user, sort) {
+    return await File.findAll({
+      where: { userId: user.id, isTrash: true },
+      order: [["name", sort]],
+    });
+  }
+
+  async changeBasketFile(user, id, state = true) {
+    const file = await File.findOne({ where: { id, userId: user.id } });
+    if (!file) {
+      throw ErrorHandler.badRequest("Файл не найден");
+    }
+    if (file.type === "dir") {
+      const changeFiles = await File.findAll({
+        where: { userId: user.id, path: { [Op.like]: `${file.path}%` } },
+      });
+      const changeIdsFile = changeFiles.map((item) => item.id);
+      await File.update({ isTrash: state }, { where: { id: changeIdsFile } });
+    } else {
+      file.isTrash = state;
+      await file.save();
+    }
+
+    return file;
+  }
+
+  async clearBasket(user) {
+    const trashedFiles = await File.findAll({
+      where: { userId: user.id, isTrash: true },
+    });
+    const files = await Promise.all(
+      trashedFiles.map(async (item) => await this.deleteFile(user, item.id))
+    );
+    return "ok";
   }
 }
 

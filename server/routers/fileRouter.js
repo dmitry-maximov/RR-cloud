@@ -12,4 +12,8 @@ router.delete("/", authMiddleware, fileController.deleteFile);
 router.get("/favorit", authMiddleware, fileController.favoritFile);
 router.post("/favorit", authMiddleware, fileController.setFavoritFile);
 
+router.get("/basket", authMiddleware, fileController.basketFiles);
+router.post("/basket", authMiddleware, fileController.changeBasketFile);
+router.delete("/basket", authMiddleware, fileController.deleteBasketFile);
+
 module.exports = router;

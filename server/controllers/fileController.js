@@ -96,6 +96,40 @@ class FileController {
       next(e);
     }
   }
+
+  async basketFiles(req, res, next) {
+    try {
+      const { sort } = req.query;
+      const { user } = req;
+
+      const files = await FileService.basketFiles(user, sort);
+      return res.json(files);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async changeBasketFile(req, res, next) {
+    try {
+      const { id, state } = req.body;
+      const { user } = req;
+
+      const file = await FileService.changeBasketFile(user, id, state);
+      return res.json(file);
+    } catch (e) {
+      next(e);
+    }
+  }
+  async deleteBasketFile(req, res, next) {
+    try {
+      const { user } = req;
+
+      const file = await FileService.clearBasket(user);
+      return res.json(file);
+    } catch (e) {
+      next(e);
+    }
+  }
 }
 
 module.exports = new FileController();

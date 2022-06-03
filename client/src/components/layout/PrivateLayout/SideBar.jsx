@@ -18,6 +18,7 @@ import {
   START_PAGE,
   CLOUD_SPAСE_PAGE,
   SETTINGS_PAGE,
+  BASKET_PAGE,
 } from '../../../utils/const';
 import AddedModal from './AddedModal';
 import Uploader from '../../uploader/Uploader';
@@ -97,7 +98,11 @@ const SideBar = () => {
                 </ListItemIcon>
                 <ListItemText primary="Настройки" />
               </ListItem>
-              <ListItem button>
+              <ListItem
+                button
+                onClick={() => navigate(BASKET_PAGE)}
+                selected={location.pathname === BASKET_PAGE}
+              >
                 <ListItemIcon>
                   <DeleteIcon />
                 </ListItemIcon>

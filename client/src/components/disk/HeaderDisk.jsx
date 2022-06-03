@@ -1,4 +1,4 @@
-import { Stack, IconButton, Typography } from '@mui/material';
+import { Stack, IconButton, Typography, Button } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   setCurrentDir,
@@ -10,8 +10,9 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import SortIcon from '@mui/icons-material/Sort';
 import ViewModuleIcon from '@mui/icons-material/ViewModule';
+import { clearBasket, getBasketFiles } from '../../actions/file.basket';
 
-const HeaderDisk = ({ caption }) => {
+const HeaderDisk = ({ basket }) => {
   const dispatch = useDispatch();
   const { history, view, sort } = useSelector((state) => state.files);
 
@@ -36,6 +37,11 @@ const HeaderDisk = ({ caption }) => {
     }
   };
 
+  const basketClearClickHandler = async () => {
+    await clearBasket();
+    dispatch(getBasketFiles(sort));
+  };
+
   return (
     <Stack
       direction="row"
@@ -58,10 +64,16 @@ const HeaderDisk = ({ caption }) => {
       ) : (
         <div> </div>
       )}
-      {caption && (
-        <Typography variant="h4" sx={{ color: '#566885' }}>
-          {caption}
-        </Typography>
+      {basket && (
+        <Stack spacing={2} direction="row">
+          <Button
+            variant="contained"
+            size="large"
+            onClick={basketClearClickHandler}
+          >
+            Очистить
+          </Button>
+        </Stack>
       )}
       <div>
         <IconButton
