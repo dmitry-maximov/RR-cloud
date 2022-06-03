@@ -11,6 +11,7 @@ import ViewListIcon from '@mui/icons-material/ViewList';
 import SortIcon from '@mui/icons-material/Sort';
 import ViewModuleIcon from '@mui/icons-material/ViewModule';
 import { clearBasket, getBasketFiles } from '../../actions/file.basket';
+import { getDiskInfo } from '../../actions/disk';
 
 const HeaderDisk = ({ basket }) => {
   const dispatch = useDispatch();
@@ -39,6 +40,7 @@ const HeaderDisk = ({ basket }) => {
 
   const basketClearClickHandler = async () => {
     await clearBasket();
+    dispatch(getDiskInfo());
     dispatch(getBasketFiles(sort));
   };
 

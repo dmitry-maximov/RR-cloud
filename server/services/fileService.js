@@ -144,6 +144,7 @@ class FileService {
   }
 
   async deleteFile(user, id) {
+    let destroySize = 0;
     const file = await File.findOne({ where: { id, userId: user.id } });
     if (!file) {
       throw ErrorHandler.badRequest("Файл не найден");
@@ -160,6 +161,8 @@ class FileService {
         type: item.type,
       }));
 
+      destroySize = destroyFiles.reduce((acc, item) => acc + item.size, 0);
+
       await File.destroy({ where: { id: destroyIdsFile } });
       destroyPathsFile.forEach((item) => {
         if (item.type === "dir") {
@@ -172,7 +175,9 @@ class FileService {
       const path = this.getPath(file, user.uuid);
       fs.unlinkSync(path);
       await file.destroy();
+      destroySize = file.size;
     }
+    await diskService.changeSpace(user.id, destroySize, "sub");
     return file;
   }
 
