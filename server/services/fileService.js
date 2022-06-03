@@ -4,6 +4,7 @@ const path = require("path");
 const ErrorHandler = require("../handlers/errorHandlers");
 const FileDto = require("../dtos/fileDto");
 const Sequelize = require("sequelize");
+const diskService = require("./diskService");
 const Op = Sequelize.Op;
 
 class FileService {
@@ -79,8 +80,10 @@ class FileService {
       ? await File.findOne({ where: { id: parent } })
       : null;
 
-    //TO DO:
-    //(user.usedSpace + file.size > user.diskSpace) => нет места
+    const hasFreePlace = await diskService.checkFreePlace(user.id, file.size);
+    if (!hasFreePlace) {
+      throw ErrorHandler.badRequest("Свободное место на диске закончилось.");
+    }
 
     let filePath;
     if (parentFile) {
@@ -117,6 +120,7 @@ class FileService {
     });
 
     const savedFile = await File.create(savedFileDto);
+    await diskService.changeSpace(user.id, file.size, "add");
     return savedFile;
   }
 

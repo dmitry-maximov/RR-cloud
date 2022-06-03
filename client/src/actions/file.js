@@ -6,6 +6,7 @@ import {
   changeUploadFile,
   showUploader,
 } from '../reducers/uploadReducer';
+import { getDiskInfo } from './disk';
 
 export const getFiles = (dirId, sort) => {
   return async (dispatch) => {
@@ -61,6 +62,7 @@ export const uploadFile = (file, dirId) => {
         },
       });
       dispatch(addFile(response.data));
+      dispatch(getDiskInfo());
     } catch (e) {
       alert(e.response.data.message);
     }
