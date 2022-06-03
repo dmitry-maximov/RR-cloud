@@ -23,5 +23,5 @@ export const formatSize = (length) => {
     length /= 1024;
     i++;
   }
-  return length.toFixed(2) + ' ' + type[i];
+  return (length == 0 ? length : length.toFixed(2)) + ' ' + type[i];
 };

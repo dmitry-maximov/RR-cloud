@@ -28,14 +28,24 @@ const File = sequelize.define("file", {
   isFavorit: { type: DataTypes.BOOLEAN, defaultValue: false },
 });
 
+const Disk = sequelize.define("disk", {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  space: { type: DataTypes.BIGINT, defaultValue: 1024 ** 3 * 10 },
+  usedSpace: { type: DataTypes.BIGINT, defaultValue: 0 },
+});
+
 User.hasOne(Token);
 Token.belongsTo(User);
 
 User.hasMany(File);
 File.belongsTo(User);
 
+User.hasOne(Disk);
+Disk.belongsTo(User);
+
 module.exports = {
   User,
   Token,
   File,
+  Disk,
 };

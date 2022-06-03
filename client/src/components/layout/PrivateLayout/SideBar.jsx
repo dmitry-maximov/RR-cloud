@@ -1,14 +1,11 @@
 import React from 'react';
-import { Button, Stack, Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import { orange } from '@mui/material/colors';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { styled } from '@mui/material/styles';
-import LinearProgress, {
-  linearProgressClasses,
-} from '@mui/material/LinearProgress';
 import { Box } from '@mui/system';
 import WbCloudyIcon from '@mui/icons-material/WbCloudy';
 import FilterDramaIcon from '@mui/icons-material/FilterDrama';
@@ -24,6 +21,7 @@ import {
 import AddedModal from './AddedModal';
 import Uploader from '../../uploader/Uploader';
 import { useNavigate } from 'react-router-dom';
+import MemoryWidget from './MemoryWidget';
 
 const SideBar = () => {
   let navigate = useNavigate();
@@ -36,20 +34,6 @@ const SideBar = () => {
   const Item = styled('div')(({ theme }) => ({
     ...theme.typography.body2,
     color: theme.palette.text.primary,
-  }));
-
-  const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
-    height: 10,
-    borderRadius: 5,
-    [`&.${linearProgressClasses.colorPrimary}`]: {
-      backgroundColor:
-        theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
-    },
-    [`& .${linearProgressClasses.bar}`]: {
-      borderRadius: 5,
-      backgroundColor:
-        theme.palette.mode === 'light' ? theme.palette.primary : '#308fe8',
-    },
   }));
 
   return (
@@ -108,17 +92,7 @@ const SideBar = () => {
             </List>
           </Item>
           <Item>
-            <Typography variant="h6">Занято:</Typography>
-            <BorderLinearProgress variant="determinate" value={80} />
-            <Typography
-              variant="t"
-              sx={{
-                padding: '.5rem .25rem',
-                float: 'right',
-              }}
-            >
-              8GB из 10GB
-            </Typography>
+            <MemoryWidget />
           </Item>
         </Stack>
       </StyledBox>

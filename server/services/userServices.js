@@ -6,6 +6,7 @@ const tokenService = require("./tokenService");
 const UserDto = require("../dtos/userDto");
 const uuid = require("uuid");
 const fileService = require("./fileService");
+const diskService = require("./diskService");
 
 class UserService {
   async registration(email, password, name, family, login) {
@@ -42,6 +43,8 @@ class UserService {
       uuid: user.activationLink,
       path: "",
     });
+    //создаем пространство
+    await diskService.createDiskSpace(userDto.id);
     return { ...tokens, user: userDto };
   }
 
