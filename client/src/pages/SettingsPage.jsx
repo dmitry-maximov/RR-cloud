@@ -13,6 +13,7 @@ import { Box } from '@mui/system';
 import { useFormik } from 'formik';
 import { useSelector } from 'react-redux';
 import * as yup from 'yup';
+import { changeInfo } from '../actions/user';
 
 const validationSchema = yup.object({
   name: yup.string('Введите имя').required('Поле обязательно к заполнению'),
@@ -28,7 +29,6 @@ const validationSchema = yup.object({
 
 const SettingsPage = () => {
   const { currentUser } = useSelector((state) => state.user);
-  debugger;
   const formik = useFormik({
     initialValues: {
       name: currentUser.name,
@@ -37,7 +37,14 @@ const SettingsPage = () => {
       email: currentUser.email,
     },
     validationSchema: validationSchema,
-    onSubmit: ({ email, password, name, family, login }) => alert(),
+    onSubmit: async ({ name, family, login }) => {
+      const response = await changeInfo(name, family, login);
+      if (response)
+        alert(
+          'Изменения успешно сохранены и вступят в силу после повторной авторизации.'
+        );
+      return;
+    },
   });
   return (
     <Paper

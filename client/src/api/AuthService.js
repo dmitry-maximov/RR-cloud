@@ -25,4 +25,8 @@ export default class AuthService {
   static async checkAuth() {
     return await $api.get('auth/refresh');
   }
+
+  static async change(name, family, login) {
+    return await $auth_api.put(`auth`, { name, family, login });
+  }
 }
