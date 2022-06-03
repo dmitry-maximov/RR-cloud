@@ -14,7 +14,7 @@ const Favorit = () => {
 
   return (
     <div>
-      <HeaderDisk caption={'Избранное'} />
+      <HeaderDisk />
       <FileList />
     </div>
   );

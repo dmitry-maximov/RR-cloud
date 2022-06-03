@@ -54,3 +54,13 @@ export const checkAuth = () => {
     }
   };
 };
+
+export const changeInfo = async (name, family, login) => {
+  try {
+    const response = await AuthService.change(name, family, login);
+    if (response.status === 200) return 'ok';
+    else return null;
+  } catch (e) {
+    alert(e.response.data.message);
+  }
+};

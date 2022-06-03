@@ -17,6 +17,8 @@ import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import SearchPanel from './SearchPanel';
+import { useNavigate } from 'react-router-dom';
+import { SETTINGS_PAGE } from '../../../utils/const';
 
 const TitleBox = styled('div')(({ theme }) => ({
   color: theme.palette.secondary,
@@ -36,6 +38,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
 
 const NavBar = () => {
   const dispatch = useDispatch();
+  let navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const { isAuth, currentUser } = useSelector((state) => state.user);
 
@@ -110,16 +113,10 @@ const NavBar = () => {
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
               >
-                <MenuItem>
+                <MenuItem onClick={() => navigate(SETTINGS_PAGE)}>
                   <Avatar /> Профиль
                 </MenuItem>
                 <Divider />
-                <MenuItem>
-                  <ListItemIcon>
-                    <Settings fontSize="small" />
-                  </ListItemIcon>
-                  Настройки
-                </MenuItem>
                 <MenuItem onClick={() => dispatch(logout())}>
                   <ListItemIcon>
                     <Logout fontSize="small" />

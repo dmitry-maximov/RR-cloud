@@ -95,6 +95,14 @@ class UserService {
     await tokenService.saveToken(userDto.id, tokens.refreshToken);
     return { ...tokens, user: userDto };
   }
+
+  async change(id, name, family, login) {
+    const user = await User.findOne({ where: { id } });
+    if (!user) {
+      throw ErrorHandler.badRequest("пользователь не найден");
+    }
+    return await User.update({ name, family, login }, { where: { id } });
+  }
 }
 
 module.exports = new UserService();

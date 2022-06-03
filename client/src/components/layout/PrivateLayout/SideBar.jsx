@@ -12,11 +12,12 @@ import FilterDramaIcon from '@mui/icons-material/FilterDrama';
 import StarHalfIcon from '@mui/icons-material/StarHalf';
 import SettingsIcon from '@mui/icons-material/Settings';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import {
   FAVORIT_PAGE,
   START_PAGE,
   CLOUD_SPAСE_PAGE,
+  SETTINGS_PAGE,
 } from '../../../utils/const';
 import AddedModal from './AddedModal';
 import Uploader from '../../uploader/Uploader';
@@ -25,6 +26,7 @@ import MemoryWidget from './MemoryWidget';
 
 const SideBar = () => {
   let navigate = useNavigate();
+  const location = useLocation();
 
   const StyledBox = styled(Box)(({ theme }) => ({
     color: theme.palette.text.primary,
@@ -65,19 +67,31 @@ const SideBar = () => {
           <AddedModal />
           <Item>
             <List>
-              <ListItem button onClick={() => navigate(CLOUD_SPAСE_PAGE)}>
+              <ListItem
+                button
+                onClick={() => navigate(CLOUD_SPAСE_PAGE)}
+                selected={location.pathname === CLOUD_SPAСE_PAGE}
+              >
                 <ListItemIcon>
                   <FilterDramaIcon />
                 </ListItemIcon>
                 <ListItemText primary="Мое облако" />
               </ListItem>
-              <ListItem button onClick={() => navigate(FAVORIT_PAGE)}>
+              <ListItem
+                button
+                onClick={() => navigate(FAVORIT_PAGE)}
+                selected={location.pathname === FAVORIT_PAGE}
+              >
                 <ListItemIcon>
                   <StarHalfIcon />
                 </ListItemIcon>
                 <ListItemText primary="Избранное" />
               </ListItem>
-              <ListItem button>
+              <ListItem
+                button
+                onClick={() => navigate(SETTINGS_PAGE)}
+                selected={location.pathname === SETTINGS_PAGE}
+              >
                 <ListItemIcon>
                   <SettingsIcon />
                 </ListItemIcon>
