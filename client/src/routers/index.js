@@ -11,8 +11,10 @@ import {
   REGISTRATION_PAGE,
   ABOUT_PAGE,
   FAVORIT_PAGE,
+  SETTINGS_PAGE,
 } from '../utils/const';
 import FavoritPage from '../pages/FavoritPage';
+import SettingsPage from '../pages/SettingsPage';
 
 export const publicRoutes = [
   {
@@ -37,6 +39,10 @@ export const privateRoutes = [
   {
     path: FAVORIT_PAGE,
     element: <FavoritPage />,
+  },
+  {
+    path: SETTINGS_PAGE,
+    element: <SettingsPage />,
   },
 ];
 
