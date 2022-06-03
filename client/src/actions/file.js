@@ -83,6 +83,7 @@ export const deleteFiles = (fileId) => {
     try {
       await FileService.deleteFiles(fileId);
       dispatch(deleteFile(fileId));
+      dispatch(getDiskInfo());
     } catch (e) {
       alert(e.response.data.message);
     }
