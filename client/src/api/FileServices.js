@@ -58,4 +58,8 @@ export default class FileService {
   static async changeBasketFile(fileId, state = true) {
     return await $auth_api.post(`files/basket`, { id: fileId, state });
   }
+
+  static async clearBasket() {
+    return await $auth_api.delete(`files/basket`);
+  }
 }

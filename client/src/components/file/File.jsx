@@ -19,7 +19,10 @@ import {
 import StarRateIcon from '@mui/icons-material/StarRate';
 import { useLocation } from 'react-router-dom';
 import { CLOUD_SPAСE_PAGE } from '../../utils/const';
-import { deleteFromBasketFile } from '../../actions/file.basket';
+import {
+  addToBasketFile,
+  deleteFromBasketFile,
+} from '../../actions/file.basket';
 
 const File = ({ file }) => {
   const dispatch = useDispatch();
@@ -58,7 +61,14 @@ const File = ({ file }) => {
     setContextMenu(null);
   };
 
-  const moveToTrashHandler = (e, file) => {
+  const moveToTrashHandler = async (e, file) => {
+    e.preventDefault();
+    await addToBasketFile(file.id);
+    dispatch(getFiles(currentDir));
+    setContextMenu(null);
+  };
+
+  const removeHandler = (e, file) => {
     e.preventDefault();
     dispatch(deleteFiles(file.id));
     setContextMenu(null);
@@ -116,6 +126,7 @@ const File = ({ file }) => {
         handleDownload={downloadHandler}
         handleDeleteFavorit={deleteFavoritesHandler}
         handleRestoreFromTrash={restoreFromTrashHandler}
+        handleRemove={removeHandler}
       />
       {view === 'list' ? (
         <TableRow

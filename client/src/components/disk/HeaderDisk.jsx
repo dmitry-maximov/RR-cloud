@@ -10,6 +10,7 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import SortIcon from '@mui/icons-material/Sort';
 import ViewModuleIcon from '@mui/icons-material/ViewModule';
+import { clearBasket, getBasketFiles } from '../../actions/file.basket';
 
 const HeaderDisk = ({ basket }) => {
   const dispatch = useDispatch();
@@ -36,6 +37,11 @@ const HeaderDisk = ({ basket }) => {
     }
   };
 
+  const basketClearClickHandler = async () => {
+    await clearBasket();
+    dispatch(getBasketFiles(sort));
+  };
+
   return (
     <Stack
       direction="row"
@@ -60,7 +66,11 @@ const HeaderDisk = ({ basket }) => {
       )}
       {basket && (
         <Stack spacing={2} direction="row">
-          <Button variant="contained" size="large" type="submit">
+          <Button
+            variant="contained"
+            size="large"
+            onClick={basketClearClickHandler}
+          >
             Очистить
           </Button>
         </Stack>

@@ -27,3 +27,11 @@ export const deleteFromBasketFile = async (fileId) => {
     alert(e.response.data.message);
   }
 };
+
+export const clearBasket = async () => {
+  try {
+    return await FileService.clearBasket();
+  } catch (e) {
+    alert(e.response.data.message);
+  }
+};

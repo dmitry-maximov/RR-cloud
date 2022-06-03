@@ -26,6 +26,7 @@ const File = sequelize.define("file", {
   parent: { type: DataTypes.INTEGER },
   child: { type: DataTypes.INTEGER },
   isFavorit: { type: DataTypes.BOOLEAN, defaultValue: false },
+  isTrash: { type: DataTypes.BOOLEAN, defaultValue: false },
 });
 
 const Disk = sequelize.define("disk", {
