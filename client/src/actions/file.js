@@ -82,6 +82,7 @@ export const deleteFiles = (fileId) => {
   return async (dispatch) => {
     try {
       const response = await FileService.deleteFiles(fileId);
+      //await FileService.changeBasketFile(fileId);
       dispatch(deleteFile(fileId));
     } catch (e) {
       alert(e.response.data.message);

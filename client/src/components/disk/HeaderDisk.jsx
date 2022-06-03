@@ -1,4 +1,4 @@
-import { Stack, IconButton, Typography } from '@mui/material';
+import { Stack, IconButton, Typography, Button } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   setCurrentDir,
@@ -11,7 +11,7 @@ import ViewListIcon from '@mui/icons-material/ViewList';
 import SortIcon from '@mui/icons-material/Sort';
 import ViewModuleIcon from '@mui/icons-material/ViewModule';
 
-const HeaderDisk = ({ caption }) => {
+const HeaderDisk = ({ basket }) => {
   const dispatch = useDispatch();
   const { history, view, sort } = useSelector((state) => state.files);
 
@@ -58,10 +58,12 @@ const HeaderDisk = ({ caption }) => {
       ) : (
         <div> </div>
       )}
-      {caption && (
-        <Typography variant="h4" sx={{ color: '#566885' }}>
-          {caption}
-        </Typography>
+      {basket && (
+        <Stack spacing={2} direction="row">
+          <Button variant="contained" size="large" type="submit">
+            Очистить
+          </Button>
+        </Stack>
       )}
       <div>
         <IconButton

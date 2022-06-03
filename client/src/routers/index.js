@@ -12,9 +12,11 @@ import {
   ABOUT_PAGE,
   FAVORIT_PAGE,
   SETTINGS_PAGE,
+  BASKET_PAGE,
 } from '../utils/const';
 import FavoritPage from '../pages/FavoritPage';
 import SettingsPage from '../pages/SettingsPage';
+import BasketPage from '../pages/BasketPage';
 
 export const publicRoutes = [
   {
@@ -43,6 +45,10 @@ export const privateRoutes = [
   {
     path: SETTINGS_PAGE,
     element: <SettingsPage />,
+  },
+  {
+    path: BASKET_PAGE,
+    element: <BasketPage />,
   },
 ];
 

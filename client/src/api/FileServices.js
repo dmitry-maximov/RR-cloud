@@ -50,4 +50,12 @@ export default class FileService {
   static async setFavoritFile(fileId, state = true) {
     return await $auth_api.post(`files/favorit`, { id: fileId, state });
   }
+
+  static async basketFiles(sort) {
+    return await $auth_api.get(`files/basket?sort=${sort}`);
+  }
+
+  static async changeBasketFile(fileId, state = true) {
+    return await $auth_api.post(`files/basket`, { id: fileId, state });
+  }
 }
